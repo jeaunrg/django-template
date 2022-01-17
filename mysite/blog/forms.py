@@ -3,7 +3,13 @@ from blog.models import BlogPost
 from mysite.widgets import MyCroppieField
 
 
-IMG_OPTIONS = {'viewport': {'width': 180, 'height': 180}}
+IMG_OPTIONS = {
+    'viewport': {
+        'width': 180,
+        'height': 180,
+        'shape': 'square'
+        },
+    }
 
 
 class BlogPostForm(forms.ModelForm):

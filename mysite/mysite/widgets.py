@@ -6,6 +6,7 @@ CROP_OPTIONS = {
     'viewport': {
         'width': 140,
         'height': 140,
+        'shape': 'square',
     },
     'boundary': {
         'width': 220,
@@ -22,6 +23,7 @@ class MyCroppieField(CroppieField):
         if "options" in kwargs:
             opt.update(kwargs["options"])
         kwargs["options"] = opt
+        self.shape = opt['viewport']['shape']
         return CroppieField.__init__(self, *args, **kwargs)
 
     def crop_image(self, *args, **kwargs):
