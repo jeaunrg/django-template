@@ -2,7 +2,7 @@
 A template to create semi-complex django website (front and back)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jeaunrg/imnodes/main/django-template.gif">
+  <img src="https://github.com/jeaunrg/django-template/blob/main/django-template.gif?raw=true">
 </p>
 
 ## How to use
