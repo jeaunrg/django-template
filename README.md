@@ -1,5 +1,5 @@
 # django-template
-A template to create semi-complex django website (front and back)
+A dynamic django website template that you can pull and start from (frontend & backend)
 
 <p align="center">
   <img src="https://github.com/jeaunrg/django-template/blob/main/django-template.gif?raw=true">
