@@ -29,9 +29,9 @@ Access the application on chrome browser
 http://localhost:8000/
 
 
-Default administration login 
-username: admin
-password: admin
+Default administration login
+- username: admin
+- password: admin
 
 
 ## Requirements

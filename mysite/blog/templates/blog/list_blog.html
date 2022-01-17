@@ -5,16 +5,18 @@
 
 <div class="container">
   <h2 class='title'>Posts
-    <a class="btn btn-primary" style="float: right" href="{% url 'blog:create' %}">+</a> <br>
+    <a class="bs-icon bi bi-file-plus" href="{% url 'blog:create' %}"></a>
   </h2>
 
 
   {% if object_list %}
     {% for object in object_list %}
       <div class="sticker">
-        <a href="{% url 'blog:detail' object.slug %}" class="btn">{{object.title}}</a>
-        <div>{{object.body}}</div>
-
+        <a class="btn" style="width:100%;" href="{% url 'blog:detail' object.slug %}">
+          <p class="blog-title" >{{object.title}}</p>
+          <div>{{object.body}}</div>
+          <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
+        </a>
       </div>
       <br>
     {% endfor %}

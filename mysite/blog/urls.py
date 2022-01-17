@@ -3,7 +3,8 @@ from blog.views import (
     DetailBlogView,
     CreateBlogView,
     EditBlogView,
-    BlogListView
+    BlogListView,
+    DeleteBlogView
 )
 
 app_name = 'blog'
@@ -13,4 +14,5 @@ urlpatterns = [
     path('create/', CreateBlogView.as_view(), name="create"),
     path('<slug>/', DetailBlogView.as_view(), name="detail"),
     path('<slug>/edit/', EditBlogView.as_view(), name="edit"),
+    path('<slug>/delete/', DeleteBlogView.as_view(), name="delete"),
 ]

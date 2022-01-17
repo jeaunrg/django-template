@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from blog.models import BlogPost
 from blog.forms import BlogPostForm
 from account.models import Account
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
@@ -39,12 +39,19 @@ class EditBlogView(LoginRequiredMixin, UpdateView):
 
 class DetailBlogView(LoginRequiredMixin, DetailView):
     model = BlogPost
-    fields = ['title', 'body', 'image', 'date_published', 'date_updated', 'author']
     template_name = 'blog/detail_blog.html'
 
 
 class BlogListView(LoginRequiredMixin, ListView):
     model = BlogPost
-    paginate_by = 2
-    fields = ['title', 'body', 'image', 'author']
+    paginate_by = 20
     template_name = 'blog/list_blog.html'
+    ordering = ['-date_published']
+
+
+class DeleteBlogView(DeleteView):
+    model = BlogPost
+    success_url = '/blog/list'
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)

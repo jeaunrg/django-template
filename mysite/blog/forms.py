@@ -12,11 +12,3 @@ class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = ['title', 'body', 'image']
-
-
-# class UpdateBlogPostForm(forms.ModelForm):
-#     image = MyCroppieField(label="", options=IMG_OPTIONS, required=False)
-#
-#     class Meta:
-#         model = BlogPost
-#         fields = ['title', 'body', 'image']

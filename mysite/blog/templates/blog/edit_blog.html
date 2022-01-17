@@ -4,9 +4,12 @@
 {% block content %}
 
 <div class="container">
-  <h2>Post</h2>
+  <h2 class='title'>Post
+    <a class="bs-icon bi bi-caret-left" href="{% url 'blog:detail' object.slug %}"></a>
 
-  <form  class="sticker" method="post">
+  </h2>
+
+  <form  class="sticker" method="post"  enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'widgets/form.html' %}
     <br>
@@ -15,6 +18,5 @@
 </div>
 
 
-<a href="{% url 'blog:detail' object.slug %}" class="btn btn-link">Annuler</a>
 
 {% endblock content %}
