@@ -1,0 +1,14 @@
+
+
+
+{% for field in form %}
+  {% include 'widgets/form_field.html' %}
+{% endfor %}
+
+{{ form.media }}
+
+{% if form.non_field_errors %}
+  <div style="color: var(--form-error);">
+    <p>{{form.non_field_errors}}</p>
+  </div>
+{% endif %}

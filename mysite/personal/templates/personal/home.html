@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+  <h2 class='title'>Boite de réception</h2>
+  {% if user %}
+    <p> {{ user }} connecté </p>
+  {% endif %}
+
+  <div id="table">
+    {% include 'widgets/table.html' with table=accounts %}
+  </div>
+</div>
+
+
+{% endblock content %}

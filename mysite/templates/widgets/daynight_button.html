@@ -1,0 +1,124 @@
+<style type="text/css">
+
+  .daynight-button {
+    opacity: 0;
+        background: none;
+    border: none;
+    width: 100%;
+
+  }
+  .daynight-button:hover,
+  .daynight-button:focus {
+    opacity: 1;
+  }
+
+  .daynight-icon {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    position: relative;
+  }
+  .daynight-icon.day {
+    transform: scale(0.8, 0.8);
+  }
+
+  .daynight-icon span {
+    background: white;
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* rayons */
+  .daynight-icon span:nth-child(1) {
+    background-color: rgba(0,0,0,0);
+    color: rgb(251, 255, 74, 1);
+    color: rgb(230, 182, 60);
+    font-size: 0%;
+    opacity: 1
+  }
+  .daynight-icon.day span:nth-child(1) {
+    font-size: 340%;
+  }
+
+  /* lune / soleil */
+  .daynight-icon span:nth-child(2) {
+    height: 70%;
+    width: 70%;
+    box-shadow: 0px 0px 10px 1px white;
+  }
+  .daynight-icon.day span:nth-child(2) {
+    background-color: rgb(230, 182, 60);
+    box-shadow: 0px 0px 40px 5px rgb(230, 182, 60);;
+  }
+
+  .daynight-icon span:nth-child(3) {
+    transform: translate(-65%, -50%);
+    background-color: rgb(210, 210, 210);
+    height: 61%;
+    width: 52%;
+  }
+  .daynight-icon.day span:nth-child(3) {
+    background-color: rgb(251, 255, 74);
+  }
+
+  /* tache sur lune */
+  .daynight-icon span:nth-child(4) {
+    opacity: 0.1;
+    height: 5%;
+    width: 5%;
+    transform: translate(-150%, -150%);
+    background: black;
+  }
+  .daynight-icon span:nth-child(5) {
+    opacity: 0.1;
+    height: 17%;
+    width: 17%;
+    transform: translate(-150%, -100%);
+    background: black;
+  }
+  .daynight-icon span:nth-child(6) {
+    opacity: 0.1;
+    height: 9%;
+    width: 9%;
+    transform: translate(-90%, -210%);
+    background: black;
+  }
+  .daynight-icon.day span:nth-child(4),
+  .daynight-icon.day span:nth-child(5),
+  .daynight-icon.day span:nth-child(6) {
+    opacity: 0;
+  }
+
+</style>
+
+
+<button class="daynight-button transform">
+  <div id="daynight-button" class="daynight-icon transform">
+    <span class="transform bi bi-brightness-high-fill"></span>
+    <span class="transform"></span>
+    <span class="transform"></span>
+    <span class="transform"></span>
+    <span class="transform"></span>
+    <span class="transform"></span>
+  </div>
+</button>
+
+
+<script type="text/javascript">
+  // initialize
+  let islight = getCookie('isDark') == 'false';
+  $('.daynight-icon').toggleClass('day', islight);
+  document.body.classList.toggle("theme-light", islight);
+
+  $(document).ready(function () {
+    $('.daynight-button').on('click', function () {
+            $('.daynight-icon').toggleClass('day');
+      document.body.classList.toggle("theme-light");
+      setCookie("isDark", !document.getElementById("daynight-button").className.includes(' day'))
+    });
+  });
+</script>

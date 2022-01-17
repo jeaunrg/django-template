@@ -1,0 +1,80 @@
+{% include 'colors.html' %}
+{% include 'fonts.html' %}
+
+
+<style type="text/css">
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      background-color: var(--page-bg);
+      color: var(--page-txt);
+    }
+
+    header {
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: var(--head-bg);
+      color: var(--head-txt2);
+      box-shadow: 0px 5px 5px var(--shadow-color);
+  }
+
+
+    footer {
+      flex-grow:0;
+      height: 50px;
+      background-color: var(--foot-bg);
+      color: var(--foot-txt);
+    }
+
+
+    #central-page {
+      flex-grow:1;
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      overflow-y: hidden;
+    }
+
+    #main {
+        padding: 5%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .sticker {
+        background-color: var(--sticker-bg);
+        color: var(--sticker-txt);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 3px 3px 5px var(--shadow-color);
+        overflow-x: auto;
+    }
+
+    .sidebar {
+      font-family: Comfortaa;
+      background-color: var(--sidebar-bg2);
+      box-shadow: 0px 5px 5px var(--shadow-color) inset, 5px 0px 5px var(--shadow-color);
+    }
+    .sidebar.open {
+      background-color: var(--sidebar-bg1);
+    }
+
+    .transform {
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      -ms-transition: all 0.5s ease-in-out;
+      transition: all 0.7s ease-in-out;
+    }
+
+    #cropper .cr-viewport {
+        border-radius: 50%;
+    }
+
+
+</style>

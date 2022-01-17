@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2>Post</h2>
+  <div class="sticker">
+    {% include 'widgets/detail.html' %}
+
+    {% if object.author == request.user %}
+      <a href="{% url 'blog:edit' object.slug %}" class="btn btn-primary">Modifier</a>
+    {% endif %}
+  </div>
+</div>
+<a href="{% url 'blog:list' %}" class="btn btn-link">Revenir aux posts</a>
+
+
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2 class='title'>Post</h2>
+
+  <form class="sticker" method="post">
+    {% csrf_token %}
+    {% include 'widgets/form.html' %}
+    <button class='btn btn-primary' id='login' type="submit">Poster</button>
+  </form>
+</div>
+{% endblock content %}

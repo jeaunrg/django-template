@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2>Post</h2>
+
+  <form  class="sticker" method="post">
+    {% csrf_token %}
+    {% include 'widgets/form.html' %}
+    <br>
+    <button class='btn btn-primary' id='login' type="submit">Mettre à jour</button>
+  </form>
+</div>
+
+
+<a href="{% url 'blog:detail' object.slug %}" class="btn btn-link">Annuler</a>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <h1 class='title'>Mon compte</h1>
+
+    <form class="sticker" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% include 'widgets/form.html' %}
+      <button class='btn btn-primary' type="submit">Modifier</button>
+    </form>
+
+    {% if success_message %}
+      <p>{{success_message}}</p>
+    {% endif  %}
+  </div>
+
+
+{% endblock content %}
