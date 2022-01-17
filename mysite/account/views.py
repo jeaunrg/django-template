@@ -3,9 +3,9 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import SignupForm, AccountUpdateForm
 from django.contrib.auth.decorators import login_required
 from .models import Account
-from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 class AccountUpdateView(LoginRequiredMixin, UpdateView):
@@ -18,6 +18,14 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         return self.render_to_response(self.get_context_data(form=form))
+
+
+class AccountDeleteView(LoginRequiredMixin, DeleteView):
+    model = Account
+    success_url = '/'
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 
 class SignupView(CreateView):

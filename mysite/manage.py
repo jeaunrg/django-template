@@ -20,9 +20,10 @@ def main():
 
 
 def clear():
-    print("delete migrations...")
     dirname = os.path.dirname(__file__)
     manage_pyfile = os.path.join(dirname, "manage.py")
+
+    print("delete migrations...")
     for migration_file in glob.glob(os.path.join(dirname, '*', 'migrations', '*.py')):
         if not migration_file.endswith('__init__.py'):
             os.remove(migration_file)
@@ -38,6 +39,11 @@ def clear():
     shutil.rmtree(media_path)
     os.mkdir(media_path)
 
+
+def init():
+    dirname = os.path.dirname(__file__)
+    manage_pyfile = os.path.join(dirname, "manage.py")
+
     print("Making migrations...")
     os.system(f"python {manage_pyfile} makemigrations")
 
@@ -52,5 +58,6 @@ def clear():
 if __name__ == '__main__':
     if '--reset' in sys.argv:
         clear()
+        init()
         sys.argv.remove('--reset')
     main()

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import os
 from mysite.settings import MEDIA_ROOT, STATIC_ROOT
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 
 class MyAccountManager(BaseUserManager):
@@ -34,7 +36,7 @@ class MyAccountManager(BaseUserManager):
 
 
 def upload_location(instance, filename):
-    upload_url = os.path.join(str(instance.id), 'images', 'avatar.png')
+    upload_url = os.path.join("avatars", str(instance.id) + '.png')
     if os.path.isfile(os.path.join(MEDIA_ROOT, upload_url)):
         os.remove(os.path.join(MEDIA_ROOT, upload_url))
     return upload_url
@@ -72,3 +74,7 @@ class Account(AbstractBaseUser):
     # Does this user have permission to view this app? (ALWAYS YES FOR SIMPLICITY)
     def has_module_perms(self, app_label):
         return True
+
+@receiver(post_delete, sender=Account)
+def submission_delete(sender, instance, **kwargs):
+    instance.profile_picture.delete(False)
