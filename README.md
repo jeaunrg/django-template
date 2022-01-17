@@ -1,6 +1,10 @@
 # django-template
 A template to create semi-complex django website (front and back)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jeaunrg/imnodes/main/django-template.gif">
+</p>
+
 ## How to use
 
 Clone this repository
