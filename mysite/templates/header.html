@@ -18,15 +18,15 @@
     {% include 'widgets/collapsable_menu.html' with menu='snippets/header_menu.html' %}
   </div>
 
-  <div id="stretch" style="flex-grow: 10;"> </div>
-  {% include 'widgets/daynight_button.html'  %}
-  <div id="stretch" style="flex-grow: 10;"> </div>
+  {% if request.user.is_authenticated %}
+    <div id="stretch" style="flex-grow: 10;"> </div>
 
-  <div id="user-name">
-    <h3 id='user-name-text'> {{ user.username }}</h3>
-  </div>
-  <div id="dropdown">
-    {% include 'widgets/profile_dropdown.html' with menu='snippets/profile_menu.html' %}
-  </div>
+    <div id="user-name">
+      <h3 id='user-name-text'> {{ user.username }}</h3>
+    </div>
+    <div id="dropdown">
+      {% include 'widgets/profile_dropdown.html' with menu='snippets/profile_menu.html' %}
+    </div>
+  {% endif %}
 
 </header>

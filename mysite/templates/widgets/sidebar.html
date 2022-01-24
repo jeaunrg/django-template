@@ -110,16 +110,16 @@
 
 
 <div>
-<div id="sidebar" class="sidebar transform open">
-    <button class="sidebar-button transform open" >
-      <div class="animated-icon transform open"><span class="transform "></span><span class="transform"></span><span class="transform"></span></div>
-    </button>
-    <div class="sb-menu-content transform open">
-      <div id="sb-tree", class="sidebar-tree" >
-        {% include menu %}
+  <div id="sidebar" class="sidebar transform open">
+      <button class="sidebar-button transform open" >
+        <div class="animated-icon transform open"><span class="transform "></span><span class="transform"></span><span class="transform"></span></div>
+      </button>
+      <div class="sb-menu-content transform-speed open">
+        <div id="sb-tree", class="sidebar-tree" >
+          {% include menu %}
+        </div>
       </div>
-    </div>
-</div>
+  </div>
 </div>
 
 
@@ -152,7 +152,6 @@
 
 
   function build_tree(tree, parent, fs, pl) {
-    console.log(tree);
     for (const [branch, subtree] of Object.entries(tree)) {
       if (fs < 11) { fs = 11;}
       // create button

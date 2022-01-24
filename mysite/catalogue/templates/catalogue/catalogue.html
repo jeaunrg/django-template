@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2 class='title'>Catalogue raisonné
+    {% if request.user.is_authenticated %}
+      <a class="bs-icon bi bi-gear" href="{% url 'catalogue:settings' %}"></a>
+      <a class="bs-icon bi bi-file-plus" href="{% url 'catalogue:create' %}"></a>
+    {% endif %}
+  </h2>
+
+  {% for object in filter.qs  %}
+    <div class="sticker">
+      <a class="btn" style="width:100%;" href="{% url 'catalogue:detail' object.slug %}">
+        <p class="catalogue-title" >{{object.titre}}</p>
+        <div>{{object.description}}</div>
+        <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
+      </a>
+    </div>
+    <br>
+
+  {% empty %}
+    Aucun document trouvé.
+
+  {% endfor %}
+
+  {% if is_paginated %}
+      <div class="pagination">
+          <span class="page-links">
+              {% if page_obj.has_previous %}
+                  <a href="/catalogue/list?page={{ page_obj.previous_page_number }}">précédent</a>
+              {% endif %}
+              <span class="page-current">
+                  Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="/catalogue/list?page={{ page_obj.next_page_number }}">suivant</a>
+              {% endif %}
+          </span>
+      </div>
+  {% endif %}
+</div>
+
+{% endblock content %}

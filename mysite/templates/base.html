@@ -23,18 +23,17 @@
 
     {% include 'cookie_manager.html' %}
 
-    {% if request.user.is_authenticated %}
-      {% include 'header.html' %}
-    {% endif %}
+    {% include 'header.html' %}
 
     <div id="central-page">
-      {% if request.user.is_authenticated %}
+
+      {% if show_filter_bar %}
         {% include 'widgets/sidebar.html' with menu='snippets/sidebar_menu.html' %}
       {% endif %}
-
+      
       <div id="main">
         {% block content %}
-          {% endblock content %}
+        {% endblock content %}
       </div>
 
     </div>

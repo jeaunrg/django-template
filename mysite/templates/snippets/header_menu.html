@@ -8,5 +8,7 @@
 </style>
 
 <a class="nav-link px-2 htext-secondary" href="{% url 'home' %}">Accueil</a>
-<a class="nav-link px-2 htext-primary" href="/admin/">Administration</a>
+<a class="nav-link px-2 htext-primary" href="{% url 'catalogue:list' %}">Catalogue raisonné</a>
+<a class="nav-link px-2 htext-primary" href="{% url 'personal:artist' %}">L'artiste</a>
+<a class="nav-link px-2 htext-primary" href="{% url 'personal:association' %}">L'association</a>
 <a class="nav-link px-2 htext-primary" href="{% url 'personal:contact' %}">Contact</a>

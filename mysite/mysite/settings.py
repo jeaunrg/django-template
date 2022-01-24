@@ -32,17 +32,19 @@ AUTHENTICATION_BACKENDS = (
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "/account/login"
 
 # Application definition
 INSTALLED_APPS = [
     'crispy_forms',
     'croppie',
+    'django_filters',
 
     # My apps
     'personal',
     'account',
-    'blog',
+    'catalogue',
 
     # django apps
     'django.contrib.admin',

@@ -34,7 +34,7 @@ class SignupView(CreateView):
     success_url = '/'
 
 
-class SigninView(LoginView):
+class SigninView(LoginView):        
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('home')

@@ -4,14 +4,10 @@
 
 
 <div class="container">
-  <h2 class='title'>Boite de réception</h2>
-  {% if user %}
+  <h2 class='title'>Accueil</h2>
+  {% if request.user.is_authenticated %}
     <p> {{ user }} connecté </p>
   {% endif %}
-
-  <div id="table">
-    {% include 'widgets/table.html' with table=accounts %}
-  </div>
 </div>
 
 

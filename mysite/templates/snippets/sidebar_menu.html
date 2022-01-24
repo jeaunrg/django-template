@@ -1,10 +1,13 @@
-<a href="{% url 'account:update' %}" id="sb-btn" class='btn text-left btn-block' style="fontsize:17px;padding-left:10px;" >
-  Mon compte</a>
-<a href="{% url 'blog:list' %}" id="sb-btn" class='btn text-left btn-block' style="fontsize:17px;padding-left:10px;" >
-  Fil d'actualité</a>
-<a href="{% url 'blog:create' %}" id="sb-btn" class='btn text-left btn-block' style="fontsize:17px;padding-left:10px;" >
-  Publier</a>
-<a href="{% url 'home' %}" id="sb-btn" class='btn text-left btn-block' style="fontsize:17px;padding-left:10px;" >
-  Boite de réception</a>
 
-<hr class="sidebar-divider">
+<style type="text/css">
+  #filter-search {
+    margin: 10px;
+    font-size: 15px;
+  }
+</style>
+
+<form action="" id="filter-search" method="get">
+    {% include 'widgets/form.html' with form=filter.form %}
+    <br>
+    <button class='btn btn-primary' type="submit">Rechercher</button>
+</form>

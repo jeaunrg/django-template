@@ -65,11 +65,12 @@
     }
 
     .transform {
-      -webkit-transition: all 0.5s ease-in-out;
-      -moz-transition: all 0.5s ease-in-out;
-      -o-transition: all 0.5s ease-in-out;
-      -ms-transition: all 0.5s ease-in-out;
-      transition: all 0.7s ease-in-out;
+      --speed: 0s;
+      -webkit-transition: all var(--speed) ease-in-out;
+      -moz-transition: all var(--speed) ease-in-out;
+      -o-transition: all var(--speed) ease-in-out;
+      -ms-transition: all var(--speed) ease-in-out;
+      transition: all var(--speed) ease-in-out;
     }
 
     .cropper-circle .cr-viewport {
@@ -85,7 +86,7 @@
     .bs-icon:hover {
       color: var(--highlight-light);
     }
-    .blog-title {
+    .catalogue-title {
       font-size: 25px;
       width: 100%;
     }
