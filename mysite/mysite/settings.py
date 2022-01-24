@@ -33,6 +33,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = "/account/login"
+LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 INSTALLED_APPS = [

@@ -29,7 +29,7 @@
 
     <div id="central-page">
       {% if request.user.is_authenticated %}
-        {% include 'widgets/sidebar.html' with menu='snippets/sidebar_menu.html' %}
+        {% include 'widgets/sidebar.html' with content='snippets/sidebar_menu.html' %}
       {% endif %}
 
       <div id="main">
