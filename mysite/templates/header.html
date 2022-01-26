@@ -1,3 +1,5 @@
+{% load static %}
+
 <style type="text/css">
   #menu, #user-name {
     padding-left: 10px;
@@ -10,13 +12,66 @@
     color: var(--highlight-light);
   }
 
+  #pre-header {
+    height: 50%;
+    min-height: 200px;
+  }
+
+  #pre-header-card {
+    background-color: var(--head-bg);
+    position: relative;
+    width: 250px;
+    height: 170px;
+    left: 50%;
+    top: -50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  #image-header {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  #pre-header-title {
+    color: var(--head-txt1);
+    text-align: center;
+  }
+  #pre-header-subtitle {
+    color: var(--head-txt2);
+    text-align: center;
+    opacity: 0.8;
+  }
+  .divider {
+    color: var(--head-txt2);
+    opacity: 0.5;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-bottom: 10%
+  }
+
 </style>
 
+<div id="pre-header">
+  <img id="image-header"  alt="header" src="{% static 'images/header.png' %}">
+  <a id="pre-header-card" class='btn' href="{% url 'home' %}">
+    <p id="pre-header-title" >Marin Marie</p>
+    <hr class="divider">
+    <p id="pre-header-subtitle">Catalogue raisonné</p>
+  </a>
+</div>
+
 <header>
+  {% if not request.user.is_authenticated %}
+  <div id="stretch" style="flex-grow: 10;"> </div>
+  {% endif %}
 
   <div id="menu">
     {% include 'widgets/collapsable_menu.html' with menu='snippets/header_menu.html' %}
   </div>
+  <div id="stretch" style="flex-grow: 10;"> </div>
 
   {% if request.user.is_authenticated %}
     <div id="stretch" style="flex-grow: 10;"> </div>
@@ -28,5 +83,4 @@
       {% include 'widgets/profile_dropdown.html' with menu='snippets/profile_menu.html' %}
     </div>
   {% endif %}
-
 </header>
