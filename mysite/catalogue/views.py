@@ -70,6 +70,16 @@ class CatalogueView(FilterView, ListView):
         context['show_filter_bar'] = True
         return context
 
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            if request.FILES.get('catalogue'):
+                for args in extract_catalogue(request.FILES['catalogue']):
+                    args['author'] = request.user
+                    object = Document(**args)
+                    object.save()
+            elif request.POST.get('delete_catalogue'):
+                Document.objects.all().delete()
+        return redirect('catalogue:list')
 #
 # class CatalogueView(ListView):
 #     model = Document
@@ -96,15 +106,3 @@ class DeleteDocumentView(LoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
-
-
-@login_required
-def upload_view(request):
-    if request.method == 'POST' and request.FILES['catalogue']:
-        for args in extract_catalogue(request.FILES['catalogue']):
-            args['author'] = request.user
-            object = Document(**args)
-            object.save()
-        return redirect('catalogue:list')
-
-    return render(request, 'catalogue/settings.html')

@@ -9,17 +9,19 @@
   </h2>
 
   <div class="sticker">
-    <form method="POST" action="{% url 'catalogue:delete' object.slug %}"> {% csrf_token %}
+    <form method="POST" action="{% url 'catalogue:delete' object.slug %}">
+      {% csrf_token %}
 
-    <p class="catalogue-title">{{object.titre}}</p>
-    <div>{{object.description}}</div>
-    <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
-    <div>Par @{{object.author}}, le {{object.date_published}}</div>
+      <p class="catalogue-title">{{object.titre}}</p>
+      <div>{{object.description}}</div>
+      <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
+      <div>Par @{{object.author}}, le {{object.date_published}}</div>
 
-    {% if object.author == request.user %}
-      <a href="{% url 'catalogue:edit' object.slug %}" class="btn btn-primary">Modifier</a>
-      <input type="submit" class="btn btn-danger" onclick="return confirm('Etes vous sûr de vouloir supprimer ce post ?');" value="Supprimer">
-    {% endif %}
+      {% if object.author == request.user %}
+        <a href="{% url 'catalogue:edit' object.slug %}" class="btn btn-primary">Modifier</a>
+        <input type="submit" class="btn btn-danger" onclick="return confirm('Etes vous sûr de vouloir supprimer ce document ?');" value="Supprimer">
+      {% endif %}
+    </form>
   </div>
 </div>
 

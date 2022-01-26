@@ -1,0 +1,21 @@
+<style type="text/css">
+  .inputfile {
+  	width: 0.1px;
+  	height: 0.1px;
+  	opacity: 0;
+  	overflow: hidden;
+  	position: absolute;
+  	z-index: -1;
+  }
+</style>
+
+<form id="form_{{input_id}}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input id="{{input_id}}" class="inputfile" type="file" name={{input_id}}>
+</form>
+
+<script type="text/javascript">
+  document.getElementById("{{input_id}}").onchange = function() {
+    document.getElementById("form_{{input_id}}").submit();
+  };
+</script>

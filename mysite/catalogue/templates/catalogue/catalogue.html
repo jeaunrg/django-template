@@ -3,13 +3,39 @@
 
 {% block content %}
 
+<style type="text/css">
+  .inputsubmit {
+  	width: 0.1px;
+  	height: 0.1px;
+  	opacity: 0;
+  	overflow: hidden;
+  	position: absolute;
+  	z-index: -1;
+  }
+</style>
+
 <div class="container">
+  {% if request.user.is_authenticated %}
+    {% include 'widgets/file_download.html' with input_id='catalogue' %}
+    <form id="form_delete_catalogue" method="post" >
+      {% csrf_token %}
+      <input id="delete_catalogue" name="delete_catalogue" type="submit" class="inputsubmit" value="delete all" onclick="return confirm('Etes vous sûr de vouloir supprimer tous les documents du catalogue ?');">
+    </form>
+  {% endif %}
+
   <h2 class='title'>Catalogue raisonné
     {% if request.user.is_authenticated %}
-      <a class="bs-icon bi bi-gear" href="{% url 'catalogue:settings' %}"></a>
-      <a class="bs-icon bi bi-file-plus" href="{% url 'catalogue:create' %}"></a>
+      <label class='bs-icon bi bi-x-square' for="delete_catalogue"></label>
+      <label class='bs-icon bi bi-images' for="catalogue"></label>
+      <a class="bs-icon bi bi-image" href="{% url 'catalogue:create' %}"></a>
     {% endif %}
   </h2>
+
+  <script type="text/javascript">
+    document.getElementById("file").onchange = function() {
+      document.getElementById("form").submit();
+    };
+  </script>
 
   {% for object in filter.qs  %}
     <div class="sticker">

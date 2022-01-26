@@ -4,8 +4,9 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+from mysite.settings import MEDIA_ROOT
 import uuid
-
+import os
 
 
 def upload_location(instance, filename):
@@ -37,7 +38,7 @@ class Document(models.Model):
     date_updated = models.DateTimeField(auto_now=True, verbose_name="date updated")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(blank=True, unique=True)
-    
+
     def __str__(self):
         return self.titre
 
@@ -45,14 +46,22 @@ class Document(models.Model):
         return [(field.verbose_name, field.value_from_object(self)) for field in self.__class__._meta.fields]
 
 
+def clean_directory(directory=os.path.join(MEDIA_ROOT, 'catalogue')):
+    if os.path.isdir(directory):
+        for folder in os.listdir(directory):
+            clean_directory(os.path.join(directory, folder))
+        if not os.listdir(directory):
+            os.rmdir(directory)
+
+
 @receiver(post_delete, sender=Document)
 def submission_delete(sender, instance, **kwargs):
     instance.image.delete(False)
+    clean_directory()
 
 
 def pre_save_document_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        print(instance.id)
         instance.slug = slugify(instance.author.username + "-" + str(instance.id))
 
 
