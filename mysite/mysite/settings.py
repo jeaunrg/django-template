@@ -39,7 +39,6 @@ LOGIN_URL = "/account/login"
 INSTALLED_APPS = [
     'crispy_forms',
     'croppie',
-    'django_filters',
 
     # My apps
     'personal',

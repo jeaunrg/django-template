@@ -1,0 +1,26 @@
+
+<style type="text/css">
+  #filter-search {
+    margin: 10px;
+    font-size: 15px;
+  }
+  .search-field {
+    margin-top: 5px;
+    color: black;
+  }
+</style>
+
+
+<form action="" id="filter-search" method="get">
+  <button class='btn btn-primary mb-1' type="submit">Rechercher</button>
+  {% for field in searchable_fields %}
+    <div class="form-floating">
+      <input type="text" class="form-control mb-1" id="{{field}}" name="{{field}}">
+      <label class="search-field" for="{{field}}">{{field}}</label>
+    </div>
+
+    <!-- <input class="form-control search-field" type="text" id="{{field}}" name="{{field}}" placeholder="{{field}}"/> -->
+  {% endfor %}
+
+  <button class='btn btn-primary' type="submit">Rechercher</button>
+</form>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
 
@@ -19,7 +19,8 @@
     {% include 'widgets/file_download.html' with input_id='catalogue' %}
     <form id="form_delete_catalogue" method="post" >
       {% csrf_token %}
-      <input id="delete_catalogue" name="delete_catalogue" type="submit" class="inputsubmit" value="delete all" onclick="return confirm('Etes vous sûr de vouloir supprimer tous les documents du catalogue ?');">
+      <input id="delete_catalogue" name="delete_catalogue" type="submit" class="inputsubmit" value="delete all"
+            onclick="return confirm('Etes vous sûr de vouloir supprimer tous les documents du catalogue ?');">
     </form>
   {% endif %}
 
@@ -31,42 +32,26 @@
     {% endif %}
   </h2>
 
-  <script type="text/javascript">
-    document.getElementById("file").onchange = function() {
-      document.getElementById("form").submit();
-    };
-  </script>
+  {% if all_search_results %}
 
-  {% for object in filter.qs  %}
-    <div class="sticker">
-      <a class="btn" style="width:100%;" href="{% url 'catalogue:detail' object.slug %}">
+    {% for object in all_search_results %}
+      <a class="btn post mb-1" style="width:100%;" href="{% url 'catalogue:detail' object.slug %}">
         <p class="catalogue-title" >{{object.titre}}</p>
         <div>{{object.description}}</div>
         <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
       </a>
-    </div>
-    <br>
+      <br>
+    {% endfor %}
 
-  {% empty %}
+    {% include 'widgets/pagination.html' with page_obj=page_obj url='/catalogue/list' %}
+
+  {% else %}
     Aucun document trouvé.
 
-  {% endfor %}
-
-  {% if is_paginated %}
-      <div class="pagination">
-          <span class="page-links">
-              {% if page_obj.has_previous %}
-                  <a href="/catalogue/list?page={{ page_obj.previous_page_number }}">précédent</a>
-              {% endif %}
-              <span class="page-current">
-                  Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
-              </span>
-              {% if page_obj.has_next %}
-                  <a href="/catalogue/list?page={{ page_obj.next_page_number }}">suivant</a>
-              {% endif %}
-          </span>
-      </div>
   {% endif %}
+
+
 </div>
+
 
 {% endblock content %}

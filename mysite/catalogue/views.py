@@ -11,8 +11,6 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from .core import extract_catalogue
 from django.contrib.auth.decorators import login_required
-import django_filters
-from django_filters.views import FilterView
 
 
 class CreateDocumentView(LoginRequiredMixin, CreateView):
@@ -47,27 +45,37 @@ class DetailDocumentView(DetailView):
     template_name = 'catalogue/detail_document.html'
 
 
-class DocumentFilter(django_filters.FilterSet):
-    class Meta:
-        model = Document
-        fields = ['titre', 'description', 'no_inventaire', 'categorie', 'theme',
-                  'technique', 'support', 'region', 'lieu', 'epoque', 'type_collection',
-                  'description']
-        fields = {'titre': ['contains'],
-                  'description': ['contains'],
-        }
-
-
-class CatalogueView(FilterView, ListView):
+class CatalogueView(ListView):
     model = Document
-    context_object_name = 'document_list'
-    template_name = 'catalogue/catalogue.html'
-    filterset_class = DocumentFilter
     paginate_by = 3
+    template_name = 'catalogue/catalogue.html'
+    ordering = ['-date_published']
+
+    context_object_name = 'all_search_results'
+    searchable_fields = ['titre', 'description', 'no_inventaire', 'categorie', 'theme',
+                         'technique', 'support', 'region', 'lieu', 'epoque', 'type_collection',
+                         'description']
+    specifications = {field: "__icontains" for field in searchable_fields}
+
+    def get_queryset(self):
+        result = super(CatalogueView, self).get_queryset()
+        filter_query = []
+        for field in self.searchable_fields:
+            value = self.request.GET.get(field)
+            if value:
+                filter_query.append(f"Q({field}{self.specifications.get(field)}='{value}')")
+        print(filter_query)
+        if filter_query:
+            result = eval("Document.objects.filter(" + " | ".join(filter_query) + ")")
+        else:
+            result = Document.objects.all()
+
+        return result
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['show_filter_bar'] = True
+        context['searchable_fields'] = self.searchable_fields
         return context
 
     def post(self, request, *args, **kwargs):
@@ -80,24 +88,6 @@ class CatalogueView(FilterView, ListView):
             elif request.POST.get('delete_catalogue'):
                 Document.objects.all().delete()
         return redirect('catalogue:list')
-#
-# class CatalogueView(ListView):
-#     model = Document
-#     paginate_by = 20
-#     template_name = 'catalogue/catalogue.html'
-#     ordering = ['-date_published']
-#     context_object_name = 'all_search_results'
-#
-#     def get_queryset(self):
-#        result = super(CatalogueView, self).get_queryset()
-#        query = self.request.GET.get('search')
-#        if query:
-#           postresult = Document.objects.filter(titre__contains=query)
-#           result = postresult
-#        else:
-#            result = Document.objects.all()
-#        return result
-
 
 
 class DeleteDocumentView(LoginRequiredMixin, DeleteView):

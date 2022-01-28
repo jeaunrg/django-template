@@ -1,13 +1,2 @@
 
-<style type="text/css">
-  #filter-search {
-    margin: 10px;
-    font-size: 15px;
-  }
-</style>
-
-<form action="" id="filter-search" method="get">
-    {% include 'widgets/form.html' with form=filter.form %}
-    <br>
-    <button class='btn btn-primary' type="submit">Rechercher</button>
-</form>
+{% include 'widgets/filter_search.html' %}

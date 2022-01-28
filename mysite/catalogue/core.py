@@ -3,7 +3,6 @@ from mysite.settings import MEDIA_ROOT
 import os
 import pandas as pd
 from datetime import datetime
-import django_filters
 from .models import Document
 from django.db import models
 
