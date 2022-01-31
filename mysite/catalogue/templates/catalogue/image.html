@@ -67,11 +67,11 @@
 
       const img = document.getElementById("img");
       const container = document.getElementById("img-container");
-
+      
+      recenter();
       zoomElement();
       dragElement(document.getElementById("img-container"));
       updateZoomStep(0);
-      recenter();
 
 
       function updateZoomStep(dstep) {
