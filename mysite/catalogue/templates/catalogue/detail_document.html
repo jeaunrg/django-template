@@ -14,7 +14,9 @@
 
       <p class="catalogue-title">{{object.titre}}</p>
       <div>{{object.description}}</div>
-      <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
+      <a href="{% url 'catalogue:image' object.slug %}">
+        <img style="object-fit: cover; width:100%;" src="{{object.image.url}}">
+      </a>
       <div>Par @{{object.author}}, le {{object.date_published}}</div>
 
       {% if object.author == request.user %}

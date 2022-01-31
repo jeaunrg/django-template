@@ -45,6 +45,11 @@ class DetailDocumentView(DetailView):
     template_name = 'catalogue/detail_document.html'
 
 
+class DocumentsImageView(DetailView):
+    model = Document
+    template_name = 'catalogue/image.html'
+
+
 class CatalogueView(ListView):
     model = Document
     paginate_by = 3

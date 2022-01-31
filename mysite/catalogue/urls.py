@@ -5,6 +5,7 @@ from catalogue.views import (
     EditDocumentView,
     CatalogueView,
     DeleteDocumentView,
+    DocumentsImageView,
 )
 
 app_name = 'catalogue'
@@ -15,4 +16,6 @@ urlpatterns = [
     path('<slug>/', DetailDocumentView.as_view(), name="detail"),
     path('<slug>/edit/', EditDocumentView.as_view(), name="edit"),
     path('<slug>/delete/', DeleteDocumentView.as_view(), name="delete"),
+    path('<slug>/image/', DocumentsImageView.as_view(), name="image"),
+
 ]
