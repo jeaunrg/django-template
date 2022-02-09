@@ -1,27 +1,24 @@
 <style type="text/css">
-  #menu, #user-name {
+  #menu,
+  #user-name {
     padding-left: 10px;
   }
-  #dropdown, #user-name {
+
+  #dropdown,
+  #user-name {
     padding-right: 10px;
   }
 
   #user-name {
     color: var(--highlight-light);
   }
-
 </style>
 
 <header>
-
   <div id="menu">
     {% include 'widgets/collapsable_menu.html' with menu='snippets/header_menu.html' %}
   </div>
-
   <div id="stretch" style="flex-grow: 10;"> </div>
-  {% include 'widgets/daynight_button.html'  %}
-  <div id="stretch" style="flex-grow: 10;"> </div>
-
   <div id="user-name">
     <h3 id='user-name-text'> {{ user.username }}</h3>
   </div>

@@ -2,14 +2,15 @@
   thead {
     background-color: var(--table-bg-head);
   }
+
   th {
     color: var(--table-txt-head);
   }
+
   tbody {
     background-color: var(--table-bg-body1);
     color: var(--table-txt-body1);
   }
-
 </style>
 
 <div class="table-responsive sticker">
@@ -18,44 +19,48 @@
     <thead>
       <tr class="table">
         {% for k in table.0.keys %}
-          <th> {{ k }} </th>
+        <th> {{ k }} </th>
         {% endfor %}
       </tr>
     </thead>
 
+
     <tbody>
       {% for values in table %}
-        <tr data-href="#">
-          {% for value in values.values %}
-            <td style="cursor: pointer;"> {{ value }}</td>
-          {% endfor %}
-        </tr>
+      <tr data-href="#">
+        {% for value in values.values %}
+        <td style="cursor: pointer;"> {{ value }}</td>
+        {% endfor %}
+      </tr>
       {% endfor %}
     </tbody>
 
   </table>
- </div>
+</div>
 
 
- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
- <script type="text/javascript">
-   var french = {"sProcessing": "En cours...",
-                 "sLengthMenu": "_MENU_ par page",
-                 "sZeroRecords": "Aucun résultat",
-                 "sInfo": "_START_ - _END_ sur _TOTAL_",
-                 "sInfoEmpty": "0",
-                 "sInfoFiltered": "(total _MAX_)",
-                 "sSearch": "Rechercher",
-             };
+<script type="text/javascript">
+  var french = {
+    "sProcessing": "En cours...",
+    "sLengthMenu": "_MENU_ par page",
+    "sZeroRecords": "Aucun résultat",
+    "sInfo": "_START_ - _END_ sur _TOTAL_",
+    "sInfoEmpty": "0",
+    "sInfoFiltered": "(total _MAX_)",
+    "sSearch": "Rechercher",
+  };
 
-   $(document).ready(function() {
-       $('#datatable').DataTable({"oLanguage": french});
-   } );
+  $(document).ready(function() {
+    $('#datatable').DataTable({
+      "oLanguage": french
+    });
+  });
 
-   $('tr[data-href]').on("click", function() {
-       document.location = $(this).data('href');
-   });
- </script>
+  $('tr[data-href]').on("click", function() {
+    document.location = $(this).data('href');
+  });
+</script>

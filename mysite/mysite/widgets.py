@@ -1,18 +1,18 @@
-from croppie.fields import CroppieField
 import copy
 
+from croppie.fields import CroppieField
 
 CROP_OPTIONS = {
-    'viewport': {
-        'width': 140,
-        'height': 140,
-        'shape': 'square',
+    "viewport": {
+        "width": 140,
+        "height": 140,
+        "shape": "square",
     },
-    'boundary': {
-        'width': 220,
-        'height': 220,
+    "boundary": {
+        "width": 220,
+        "height": 220,
     },
-    'showZoomer': False,
+    "showZoomer": False,
 }
 
 
@@ -23,7 +23,7 @@ class MyCroppieField(CroppieField):
         if "options" in kwargs:
             opt.update(kwargs["options"])
         kwargs["options"] = opt
-        self.shape = opt['viewport']['shape']
+        self.shape = opt["viewport"]["shape"]
         return CroppieField.__init__(self, *args, **kwargs)
 
     def crop_image(self, *args, **kwargs):

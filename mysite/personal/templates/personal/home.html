@@ -1,18 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
+<style type="text/css">
+  #centered-buttons {
+    padding-top: 30px;
+    margin: 0 auto;
+    text-align: center;
+    left: 25%;
+    right: 25%;
+  }
+
+  .main-btn {
+    font-size: 100%;
+    width: 50%;
+    max-width: 300px;
+  }
+</style>
 
 <div class="container">
-  <h2 class='title'>Boite de réception</h2>
-  {% if user %}
-    <p> {{ user }} connecté </p>
-  {% endif %}
-
-  <div id="table">
-    {% include 'widgets/table.html' with table=accounts %}
+  <div id='centered-buttons'>
+    <a type="button" href="{% url 'patient:preop' %}" class="btn btn-outline-success main-btn">
+      <img src="{% static 'images/add_patient.svg' %}" class="icon1" width="80px" />
+      <p> Inclure un nouveau patient</p>
+    </a>
+    <br><br>
+    <a type="button" href="{% url 'patient:patients' 'all' %}" class="btn btn-outline-success main-btn">
+      <img src="{% static 'images/find_patient.svg' %}" class="icon1" width="80px" />
+      <p> Retrouver un patient déjà inclus</p>
+    </a>
   </div>
-</div>
 
+</div>
 
 {% endblock content %}

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+  .submit-button {
+    max-width: 200px;
+  }
+
+  .h3 {
+    margin-top: 150px;
+  }
+
+  /* .title {
+      padding: 5px;
+      background: rgb(180, 180, 180);
+      color: white;
+    } */
+  input {
+    border-style: hidden;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+
+
+<script>
+  document.getElementById('ppage').href = "{% url 'patient:patients' 'all' %}"
+</script>
+<br>
+
+
+<div class="container px-4">
+  <div class="title">
+    <h2 align="center"> PATIENT N°{{patient.incl_num}} </h2>
+  </div>
+  <br>
+  <div class="info container">
+
+    <a href="{% url 'patient:edit' patient.slug %}" style="float: right;padding: 4px;" class="btn">
+      <img src="{% static 'images/edit.svg' %}" class="icon2" width="25px" />
+    </a>
+    <h4> Rappel des informations saisies </h4>
+    <hr>
+    <div style="padding-left: 10px;">
+      <strong>Taille</strong> <a>{{patient.get_height}}. </a><br>
+      <strong>Poids</strong> <a>{{patient.weight}} kg </a><br>
+      <strong>Date de naissance </strong> <a>{{patient.ddn | date:'d/m/Y'}} {% if patient.ddi %}, soit {{patient.get_age_at_intervention}} ans le jour de l'intervention {% endif %} </a><br><br>
+
+      <strong> Intervention </strong>
+      {% if patient.ddi %}
+      <a>Prévue le {{patient.ddi | date:'d/m/Y'}} </a>
+      {% endif %}<br>
+      {% if patient.chirurgie %}
+      <strong>Catégorie </strong> <a>{{patient.chirurgie}}</a><br>
+      {% endif %}
+      {% if patient.intervention %}
+      <strong>Intitulé </strong> <a>{{patient.intervention}}</a><br>
+      {% endif %}
+      {% if patient.chirurgien %}
+      <strong>Chirurgien </strong> <a>{{patient.chirurgien}}</a><br>
+      {% endif %}
+    </div>
+    <br><br>
+
+
+    <a href="{% url 'patient:addtrt' patient.slug %}" style="float: right; padding: 4px;" class="btn">
+      <img src="{% static 'images/add_drug.svg' %}" class="icon2" width="25px" />
+    </a>
+    <h4> Traitements </h4>
+    <hr>
+
+    {% if patient.traitements %}
+    {% for idtrt, values in patient.traitements.items %}
+    <a class='btn' href="{% url 'patient:edittrt' patient.slug idtrt %}"> <strong>{{values.pathologie}} - </strong>{{values.traitement}}</a>
+    {% for concl in values.conclusion %} <br><i> - {{concl}}</i> {% endfor %} <br>
+    {% endfor %}
+
+    {% else %}
+    <p> Aucun traitement. </p>
+    {% endif %}
+    <br><br>
+
+    <h4> Proposition de prise en charge </h4>
+    <hr>
+    <a> Quel traitement arréter et comment ?</a><br>
+    {% if patient.traitements %}
+    <a class='btn btn-link' href="{% url 'algorithm:algo' patient.slug 'classic' %}"> Lancer l'algorithme automatique</a>
+    <a class='btn btn-link' href="{% url 'algorithm:algo' patient.slug 'from_scratch' %}"> (algo. classique) </a>
+    {% else %}
+    <a class='btn btn-link' href="{% url 'algorithm:algo' patient.slug 'from_scratch' %}"> Lancer l'algorithme </a>
+    {% endif %}
+
+    <br>
+    <br>
+    <a> Quand reprendre le traitement ?</a><br>
+    <a class='btn btn-link' href="{% url 'patient:postop' patient.slug %}">Cliquez içi</a>
+    <br><br>
+
+    <h4> Résultats </h4>
+    <hr>
+    <a class='btn' href="{% url 'personal:pdf' patient.slug 'False' %}">
+      <img src="{% static 'images/aspdf.svg' %}" class="icon3" width="80px" />
+    </a>
+    <a class='btn' href="{% url 'personal:pdf' patient.slug 'True' %}">
+      <img src="{% static 'images/download.svg' %}" class="icon3" width="80px" />
+    </a>
+  </div>
+
+</div>
+<br>
+<div class="card-footer text-muted">
+  Modifié le {{patient.date_updated |date:'d/m/Y'}} par @{{patient.author}}
+</div>
+
+
+{% endblock content %}

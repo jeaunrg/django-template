@@ -2,18 +2,18 @@
 
 {% block content %}
 
-  <div class="container">
-    <h2>Connexion</h2>
+<div class="container">
+  <h2>Connexion</h2>
 
-    <form  class="sticker" method="post">
-      {% csrf_token %}
-      {% include 'widgets/form.html' %}
-      <button class='btn btn-primary' id='login' type="submit">Se connecter</button>
-    </form>
+  <form class="sticker" method="post">
+    {% csrf_token %}
+    {% include 'widgets/form.html' %}
+    <button class='btn btn-primary' id='login' type="submit">Se connecter</button>
+  </form>
 
-    <a class='btn btn-link' href="{% url 'account:signup' %}"> Inscription </a>
-    <a class='btn btn-link' href="{% url 'password_reset' %}"> Mot de passe oublié ? </a>
+  <a class='btn btn-link' href="{% url 'account:signup' %}"> Inscription </a>
+  <a class='btn btn-link' href="{% url 'password_reset' %}"> Mot de passe oublié ? </a>
 
-  </div>
+</div>
 
 {% endblock %}

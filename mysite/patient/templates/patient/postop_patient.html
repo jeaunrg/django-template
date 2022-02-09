@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<style type="text/css">
+  .create-form {
+    width: 80%;
+    max-width: 100%;
+    margin: auto;
+    min-width: 300px;
+  }
+
+  .submit-button {
+    max-width: 200px;
+  }
+
+  .h3 {
+    margin-top: 150px;
+  }
+
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+</style>
+
+<script>
+  document.getElementById('ppage').href = "{% url 'patient:detail' patient.slug %}"
+</script>
+
+<form method="post" class="create-form">
+  {% csrf_token %}
+  <br>
+  <h3> PATIENT N° {{patient.incl_num}} | Saisie des données post-opératoires </h3>
+  <hr>
+  {% include 'patient/snippets/field2html.html' with field=form.schema_therap %}
+
+  <div class="table-responsive">
+    <table id="mytable" class="table table-bordred table-striped sortable">
+      <thead>
+        <th>Traitement</th>
+        <th>Catégorie</th>
+        <th>Indication</th>
+        <th>Date de dernière prise théorique</th>
+        <th>Date de dernière prise pratique</th>
+        <th>Inobservance</th>
+      </thead>
+      {% for i, v in patient.traitements.items %}
+      <tr>
+        <td> {{v.traitement}} </td>
+        <td> {{v.categorie}} </td>
+        <td> {{v.pathologie}} </td>
+        <td> {{v.ddprise_th}} </td>
+        <td>
+          {% if v.ddprise_pr %}
+          <input type="date" name="ddprise_pr__{{i}}" id="ddprise_pr__{{i}}" class="form-control" value={{v.ddprise_pr}}>
+          {% else %}
+          <input type="date" name="ddprise_pr__{{i}}" id="ddprise_pr__{{i}}" class="form-control" value={{v.ddprise_th}}>
+          {% endif %}
+        </td>
+        <td>
+          <select class="form-select" id="inobservance__{{i}}" name="inobservance__{{i}}">
+            {% for value in form.get_inobservance_choices %}
+            <option value="{{value}}" {% if v.inobservance == value %} selected {% endif %}>{{ value }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <hr><br>
+
+  {% for field in form %}
+  {% if field.name != 'schema_therap' %}
+  {% include 'patient/snippets/field2html.html' %}
+  {% endif %}
+  {% endfor %}
+  <button type="submit" class="btn btn-success">Envoyer</button>
+</form>
+
+{% endblock content %}

@@ -2,16 +2,16 @@
 
 {% block content %}
 
-  <div class="container">
-    <h2>Inscription</h2>
+<div class="container">
+  <h2>Inscription</h2>
 
-    <form  class="sticker" method="post">
-      {% csrf_token %}
-      {% include 'widgets/form.html' %}
-      <button class='btn btn-primary' type="submit">S'inscrire</button>
-    </form>
+  <form class="sticker" method="post">
+    {% csrf_token %}
+    {% include 'widgets/form.html' %}
+    <button class='btn btn-primary' type="submit">S'inscrire</button>
+  </form>
 
-    <a class='btn btn-link' href="{% url 'account:login' %}"> Connexion </a>
-  </div>
+  <a class='btn btn-link' href="{% url 'account:login' %}"> Connexion </a>
+</div>
 
 {% endblock %}
