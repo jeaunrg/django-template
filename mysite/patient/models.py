@@ -19,10 +19,12 @@ class Patient(models.Model):
     # -------------------- PREOP -----------------#
     # patient
     firstname = models.CharField("prénom", max_length=200, default="")
-    lastname = models.CharField("nom", max_length=200, default="")
-    height = models.IntegerField("taille")
-    weight = models.IntegerField("poids")
-    ddn = models.DateField("Date de naissance")
+    lastname = models.CharField(
+        "nom", max_length=200, default="", null=True, blank=True
+    )
+    height = models.IntegerField("taille", null=True, blank=True)
+    weight = models.IntegerField("poids", null=True, blank=True)
+    ddn = models.DateField("Date de naissance", null=True, blank=True)
 
     # intervention
     ddi = models.DateField("Date de l'intervention", null=True, blank=True)
@@ -120,6 +122,8 @@ class Patient(models.Model):
         return ((self.ddi - self.ddn) / 365).days
 
     def get_height(self):
+        if not self.height:
+            return "None"
         hm = int(self.height / 100)
         return "{0}m{1}".format(hm, int(self.height - hm * 100))
 

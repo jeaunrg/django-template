@@ -33,19 +33,15 @@
     text-align: center;
   }
 </style>
-<html>
+
 
 <script>
-  document.getElementById('ppage').href = "{% url 'patient:detail' patient.slug %}"
+  document.getElementById('ppage').href = "{% url 'patient:detail' patient.slug %}";
 </script>
 
-<button id="next-button" onclick="next()" class="btn btn-round">
-  <img src="{% static 'images/next.svg' %}" class="icon1" width="80px" />
+<button id="next-button" onclick="next()" class="btn bs-icon bi-arrow-right-circle "></button>
+<button id="previous-button" onclick="previous()" class="btn bs-icon bi-arrow-left-circle "></button>
 
-</button>
-<button id="previous-button" onclick="previous()" class="btn btn-round">
-  <img src="{% static 'images/previous.svg' %}" class="icon1" width="80px" />
-</button>
 
 <br>
 <h3> PATIENT N°{{patient.incl_num}}</h3>
@@ -78,47 +74,22 @@
 
   <div id="final" style="display: none; text-align: left;"> </div>
   <br>
-
-
-
 </div>
 
-</html>
 
 
 <script type="text/javascript">
-  const init_algo = {
-    {
-      algo | safe
-    }
-  };
-  const questions = {
-    {
-      questions | safe
-    }
-  };
-  const references = {
-    {
-      refs | safe
-    }
-  };
-  const default_results = {
-    {
-      results | safe
-    }
-  };
-  const pbar_max = {
-    {
-      pbar_max
-    }
-  };
-  console.log(pbar_max);
-  console.log(init_algo);
+  const init_algo = {{ algo | safe }};
+  const questions = {{ questions | safe }};
+  const references = {{ refs | safe }};
+  const default_results = {{ results | safe }};
+  const pbar_max = {{ pbar_max }};
+
   var current_qid = null;
-  var results = {}
+  var results = {};
   var conclusions = {};
-  var traitement_ref = 'conclusion'
-  start_algo()
+  var traitement_ref = 'conclusion';
+  start_algo();
 
   function dict_to_hiddenform(dico, form, prefix = '') {
     for (const key in dico) {

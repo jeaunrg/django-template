@@ -48,6 +48,5 @@ def algo_view(request, slug, mode):
         context["results"] = {}
     else:
         context["results"] = get_default_results(patient)
-    # return redirect('patient:detail', slug)
-
+    print("CONTEXT", context)
     return render(request, "algorithm/algo_manager.html", context)

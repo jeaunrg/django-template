@@ -13,11 +13,6 @@
     margin-top: 150px;
   }
 
-  /* .title {
-      padding: 5px;
-      background: rgb(180, 180, 180);
-      color: white;
-    } */
   input {
     border-style: hidden;
   }
@@ -42,9 +37,7 @@
   <br>
   <div class="info container">
 
-    <a href="{% url 'patient:edit' patient.slug %}" style="float: right;padding: 4px;" class="btn">
-      <img src="{% static 'images/edit.svg' %}" class="icon2" width="25px" />
-    </a>
+    <a href="{% url 'patient:edit' patient.slug %}" style="float: right;padding: 4px;" class="btn bs-icon bi-pencil"></a>
     <h4> Rappel des informations saisies </h4>
     <hr>
     <div style="padding-left: 10px;">
@@ -68,10 +61,7 @@
     </div>
     <br><br>
 
-
-    <a href="{% url 'patient:addtrt' patient.slug %}" style="float: right; padding: 4px;" class="btn">
-      <img src="{% static 'images/add_drug.svg' %}" class="icon2" width="25px" />
-    </a>
+    <a href="{% url 'patient:addtrt' patient.slug %}" style="float: right;padding: 4px;" class="btn bs-icon bi-clipboard-plus"></a>
     <h4> Traitements </h4>
     <hr>
 
@@ -104,12 +94,8 @@
 
     <h4> Résultats </h4>
     <hr>
-    <a class='btn' href="{% url 'personal:pdf' patient.slug 'False' %}">
-      <img src="{% static 'images/aspdf.svg' %}" class="icon3" width="80px" />
-    </a>
-    <a class='btn' href="{% url 'personal:pdf' patient.slug 'True' %}">
-      <img src="{% static 'images/download.svg' %}" class="icon3" width="80px" />
-    </a>
+    <a href="{% url 'personal:pdf' patient.slug 'False' %}" class="btn bs-icon bi-file-medical"></a>
+    <a href="{% static 'images/download.svg' %}" class="btn bs-icon bi-arrow-bar-down"></a>
   </div>
 
 </div>

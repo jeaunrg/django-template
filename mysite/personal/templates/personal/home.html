@@ -21,13 +21,11 @@
 
 <div class="container">
   <div id='centered-buttons'>
-    <a type="button" href="{% url 'patient:preop' %}" class="btn btn-outline-success main-btn">
-      <img src="{% static 'images/add_patient.svg' %}" class="icon1" width="80px" />
+    <a type="button" href="{% url 'patient:preop' %}" class="btn bs-icon bi-person-badge">
       <p> Inclure un nouveau patient</p>
     </a>
     <br><br>
-    <a type="button" href="{% url 'patient:patients' 'all' %}" class="btn btn-outline-success main-btn">
-      <img src="{% static 'images/find_patient.svg' %}" class="icon1" width="80px" />
+    <a type="button" href="{% url 'patient:preop' %}" class="btn bs-icon bi-search">
       <p> Retrouver un patient déjà inclus</p>
     </a>
   </div>
