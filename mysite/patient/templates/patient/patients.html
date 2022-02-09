@@ -37,15 +37,11 @@
 
     {% if n_patients %}
     <div class="get-patients">
-      <a class="btn" href="{% url 'personal:data' filter query %}">
-        <img src="{% static 'images/download.svg'%}" class="icon2" width="40px" />
-      </a>
+      <a class="btn bs-icon bi-file-earmark-ruled" href="{% url 'personal:data' filter query %}"></a>
     </div>
     {% endif %}
     <div class="add-patient">
-      <a href="{% url 'patient:preop' %}" class="btn">
-        <img src="{% static 'images/add_patient.svg' %}" class="icon2" width="40px" />
-      </a>
+      <a class="btn bs-icon bi-person-badge" href="{% url 'patient:preop' %}" ></a>
     </div>
 
   </div>

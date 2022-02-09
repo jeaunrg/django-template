@@ -43,13 +43,11 @@ def edit_patient_view(request, slug):
     context = {}
     patient = get_object_or_404(Patient, slug=slug)
     form = UpdatePatientFileForm(request.POST or None, instance=patient)
-
     if request.POST:
         if form.is_valid():
             patient = form.save(commit=False)
             patient.save()
             return redirect("patient:detail", slug)
-
     context["patient"] = patient
     context["form"] = form
     context["format_date"] = True
@@ -61,10 +59,8 @@ def add_traitement_view(request, slug):
     context = {}
     patient = get_object_or_404(Patient, slug=slug)
     context["patient"] = patient
-
     form = TraitementFileForm(request.POST or None)
     context["form"] = form
-
     if request.POST:
         if form.is_valid():
             idtrt = 0
@@ -72,10 +68,8 @@ def add_traitement_view(request, slug):
                 idtrt += 1
             values = {k: v for k, v in request.POST.items() if k in form.fields}
             if values["traitement"] in TRAIT_CHOICES:
-                values["flags"] = TRAIT_CHOICES.get(values["traitement"])
-                values["categorie"] = TRAIT_CHOICES.get(values["traitement"]).split(
-                    "-"
-                )[0]
+                values["flags"] = TRAIT_CHOICES[values["traitement"]]
+                values["categorie"] = TRAIT_CHOICES[values["traitement"]].split("-")[0]
             patient.traitements[idtrt] = values
             patient.save()
             return redirect("patient:detail", slug)
@@ -103,17 +97,15 @@ def edit_traitement_view(request, slug, idtrt):
                 else:
                     values = {k: v for k, v in request.POST.items() if k in form.fields}
                     if values["traitement"] in TRAIT_CHOICES:
-                        values["flags"] = TRAIT_CHOICES.get(values["traitement"])
-                        values["categorie"] = TRAIT_CHOICES.get(
-                            values["traitement"]
-                        ).split("-")[0]
+                        values["flags"] = TRAIT_CHOICES[values["traitement"]]
+                        values["categorie"] = TRAIT_CHOICES[values["traitement"]].split(
+                            "-"
+                        )[0]
                     patient.traitements[idtrt].update(values)
                 patient.save()
                 return redirect("patient:detail", slug)
-
     context["form"] = form
     context["traitement"] = patient.traitements[idtrt]
-
     return render(request, "patient/edit_traitement.html", context)
 
 
@@ -121,7 +113,6 @@ def edit_traitement_view(request, slug, idtrt):
 def postop_patient_view(request, slug):
     patient = get_object_or_404(Patient, slug=slug)
     context = {}
-
     form = PostopPatientFileForm(request.POST or None, instance=patient)
     if request.POST:
         if form.is_valid():
@@ -133,10 +124,8 @@ def postop_patient_view(request, slug):
                     if k.startswith(label):
                         idtrt = k.split("__")[-1]
                         patient.traitements[idtrt][label] = v
-
             patient.save()
             return redirect("patient:detail", patient.slug)
-
     context["slug"] = slug
     context["form"] = form
     context["patient"] = patient
@@ -151,5 +140,4 @@ def patients_view(request, filter):
     context["n_patients"] = len(patients)
     context["filter"] = filter
     context["query"] = query
-
     return render(request, "patient/patients.html", context)

@@ -1,12 +1,15 @@
 import copy
+from io import BytesIO
 
 import pandas as pd
 from account.models import Account
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import connection
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.base import TemplateView
+from editable.settings import EXCEL_ENCODING, EXCEL_FILENAME
 from patient.models import Patient
 from patient.utils import get_patients_queryset
 
@@ -35,7 +38,6 @@ class ContactView(LoginRequiredMixin, TemplateView):
 def generate_pdf_view(request, slug, download="False"):
     patient = get_object_or_404(Patient, slug=slug)
     SERVER_URL = request.build_absolute_uri("/")
-
     context = {}
     context["SERVER_URL"] = SERVER_URL
     context["patient"] = patient
@@ -52,12 +54,11 @@ def download_data_view(request, filter, query):
     kwargs = {}
     if filter == "is_author":
         kwargs["author"] = request.user
-
     incl_nums = [patient.incl_num for patient in get_patients_queryset(query, **kwargs)]
     queryset = Patient.objects.filter(incl_num__in=incl_nums)
     query = str(queryset.query)
     df = pd.read_sql_query(query, connection)
-    excel_file = IO()
+    excel_file = BytesIO()
     xlwriter = pd.ExcelWriter(excel_file, engine="xlsxwriter")
     df.to_excel(xlwriter, "sheetname", encoding=EXCEL_ENCODING)
     xlwriter.save()
