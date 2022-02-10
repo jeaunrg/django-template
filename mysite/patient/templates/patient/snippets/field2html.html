@@ -20,8 +20,8 @@
 
   <!-- other input -->
   {% else %}
-    <input {% if field.field.required %} required {% endif %} type="{{field.input_type}}" name={{field.name}} id={{field.name}} class="form-control" placeholder={{field.label}} value="{{field.value}}">
-
+  <input {% if field.field.required %} required {% endif %} type="{{field.input_type}}" name={{field.name}} id={{field.name}} class="form-control" placeholder={{field.label}} value="{{field.value}}">
+  <!-- <input {% if field.field.required %} required {% endif %} type="{{field.input_type}}" name={{field.name}} id={{field.name}} class="form-control" placeholder={{field.label}} {% if field.value is not None %} value="{{field.value}}" {% endif %}> -->
   {% endif %}
 
   <!-- label -->

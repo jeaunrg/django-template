@@ -18,10 +18,8 @@ def to_choice(data, add_empty=True):
 class Patient(models.Model):
     # -------------------- PREOP -----------------#
     # patient
-    firstname = models.CharField("prénom", max_length=200, default="")
-    lastname = models.CharField(
-        "nom", max_length=200, default="", null=True, blank=True
-    )
+    firstname = models.CharField("prénom", max_length=200, blank=True, default="")
+    lastname = models.CharField("nom", max_length=200, blank=True, default="")
     height = models.IntegerField("taille", null=True, blank=True)
     weight = models.IntegerField("poids", null=True, blank=True)
     ddn = models.DateField("Date de naissance", null=True, blank=True)

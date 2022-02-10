@@ -25,7 +25,6 @@
 
 
 <script>
-  document.getElementById('ppage').href = "{% url 'patient:patients' 'all' %}"
 </script>
 <br>
 
@@ -95,7 +94,7 @@
     <h4> Résultats </h4>
     <hr>
     <a href="{% url 'personal:pdf' patient.slug 'False' %}" class="btn bs-icon bi-file-medical"></a>
-    <a href="{% static 'images/download.svg' %}" class="btn bs-icon bi-arrow-bar-down"></a>
+    <a href="{% url 'personal:pdf' patient.slug 'True' %}" class="btn bs-icon bi-arrow-bar-down"></a>
   </div>
 
 </div>
