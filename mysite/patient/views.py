@@ -37,7 +37,8 @@ class PreopPatientView(LoginRequiredMixin, CreateView):
         return reverse("patient:detail", kwargs={"slug": self.object.slug})
 
 
-class PostopPatientView(LoginRequiredMixin, CreateView):
+class PostopPatientView(LoginRequiredMixin, UpdateView):
+    model = Patient
     form_class = PostopPatientFileForm
     template_name = "patient/postop_patient.html"
 

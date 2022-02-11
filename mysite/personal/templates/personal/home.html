@@ -19,14 +19,18 @@
   }
 </style>
 
+<script type="text/javascript">
+  document.getElementById('ppage').style.display = "none";  
+</script>
+
 <div class="container">
   <div id='centered-buttons'>
-    <a type="button" href="{% url 'patient:preop' %}" class="btn bs-icon bi-person-badge">
-      <p> Inclure un nouveau patient</p>
+    <a type="button" href="{% url 'patient:preop' %}" class="btn bs-icon2 bi-person-badge">
+      <p style="font-size: 20px;"> Inclure un nouveau patient</p>
     </a>
     <br><br>
-    <a type="button" href="{% url 'patient:patients' 'all' %}" class="btn bs-icon bi-search">
-      <p> Retrouver un patient déjà inclus</p>
+    <a type="button" href="{% url 'patient:patients' 'all' %}" class="btn bs-icon2 bi-search">
+      <p style="font-size: 20px;"> Retrouver un patient déjà inclus</p>
     </a>
   </div>
 

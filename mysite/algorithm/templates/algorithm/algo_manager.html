@@ -15,18 +15,17 @@
     white-space: pre-line;
   }
 
-  .btn-round {
-    position: fixed;
-  }
-
   #previous-button {
     left: 2%;
     top: 30%;
+    position: fixed;
   }
 
   #next-button {
     right: 2%;
     top: 30%;
+    float: right;
+    position: fixed;
   }
 
   h3 {
@@ -34,14 +33,12 @@
   }
 </style>
 
-
-<script>
+<script type="text/javascript">
   document.getElementById('ppage').href = "{% url 'patient:detail' patient.slug %}";
 </script>
 
-<button id="next-button" onclick="next()" class="btn bs-icon bi-arrow-right-circle "></button>
-<button id="previous-button" onclick="previous()" class="btn bs-icon bi-arrow-left-circle "></button>
-
+<button id="previous-button" onclick="previous()" class="btn bs-icon2 bi-arrow-left-circle "></button>
+<button id="next-button" onclick="next()" class="btn bs-icon2 bi-arrow-right-circle "></button>
 
 <br>
 <h3> PATIENT N°{{patient.incl_num}}</h3>
