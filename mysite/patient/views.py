@@ -89,17 +89,19 @@ class AddTraitementView(LoginRequiredMixin, FormView):
     form_class = TraitementFileForm
     template_name = "patient/add_traitement.html"
 
+    def get_initial(self):
+        self.patient = get_object_or_404(Patient, slug=self.kwargs["slug"])
+
     def form_valid(self, form):
-        patient = get_object_or_404(Patient, slug=self.kwargs["slug"])
         idtrt = 0
-        while str(idtrt) in patient.traitements:
+        while str(idtrt) in self.patient.traitements:
             idtrt += 1
         values = {k: v for k, v in self.request.POST.items() if k in form.fields}
         if values["traitement"] in TRAIT_CHOICES:
             values["flags"] = TRAIT_CHOICES[values["traitement"]]
             values["categorie"] = TRAIT_CHOICES[values["traitement"]].split("-")[0]
-        patient.traitements[idtrt] = values
-        patient.save()
+        self.patient.traitements[idtrt] = values
+        self.patient.save()
         return super(AddTraitementView, self).form_valid(form)
 
     def get_success_url(self):
@@ -111,21 +113,20 @@ class EditTraitementView(LoginRequiredMixin, FormView):
     template_name = "patient/edit_traitement.html"
 
     def get_initial(self):
-        patient = get_object_or_404(Patient, slug=self.kwargs["slug"])
-        return patient.traitements[self.kwargs["idtrt"]]
+        self.patient = get_object_or_404(Patient, slug=self.kwargs["slug"])
+        return self.patient.traitements[self.kwargs["idtrt"]]
 
     def form_valid(self, form):
         idtrt = self.kwargs["idtrt"]
-        patient = get_object_or_404(Patient, slug=self.kwargs["slug"])
         if (
             self.request.POST.get("submitType") == "reset"
-            and "conclusion" in patient.traitements[idtrt]
+            and "conclusion" in self.patient.traitements[idtrt]
         ):
-            del patient.traitements[idtrt]["conclusion"]
-            patient.save()
+            del self.patient.traitements[idtrt]["conclusion"]
+            self.patient.save()
         else:
             if self.request.POST.get("submitType") == "delete":
-                del patient.traitements[idtrt]
+                del self.patient.traitements[idtrt]
             else:
                 values = {
                     k: v for k, v in self.request.POST.items() if k in form.fields
@@ -135,8 +136,8 @@ class EditTraitementView(LoginRequiredMixin, FormView):
                     values["categorie"] = TRAIT_CHOICES[values["traitement"]].split(
                         "-"
                     )[0]
-                patient.traitements[idtrt].update(values)
-            patient.save()
+                self.patient.traitements[idtrt].update(values)
+            self.patient.save()
         return super(EditTraitementView, self).form_valid(form)
 
     def get_success_url(self):

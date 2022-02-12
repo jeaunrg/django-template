@@ -8,12 +8,12 @@
 </style>
 
 <script type="text/javascript">
-  document.getElementById('ppage').href = "{% url 'patient:detail' patient.slug %}";
+  document.getElementById('ppage').href = "{% url 'patient:detail' view.patient.slug %}";
 </script>
 
 <br>
 <div class="container px-4">
-  <h2 align="center"> PATIENT N°{{patient.incl_num}} </h2>
+  <h2 align="center"> PATIENT N°{{view.patient.incl_num}} </h2>
   <hr>
   <form method="post" class="create-form" id="myform">
     {% csrf_token %}

@@ -29,8 +29,6 @@ def get_default_results(patient):
     }
 
     for values in patient.traitements.values():
-        print("")
-        print(values)
         if "Antiagregant plaquettaire" in values["flags"]:
             results["antiplatelets"] = "Oui"
 
@@ -71,5 +69,4 @@ def get_default_results(patient):
         results["bleeding_risk"] = patient.bleeding_risk
         if patient.bleeding_risk != "intermédiaire":
             results["bleeding_risk2"] = patient.bleeding_risk
-    print(results)
     return results

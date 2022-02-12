@@ -5,23 +5,11 @@ from .models import Account
 
 
 class AccountAdmin(UserAdmin):
-    list_display = (
-        "username",
-        "email",
-        "date_joined",
-        "last_login",
-        "is_admin",
-        "is_staff",
-    )
-    search_fields = (
-        "username",
-        "email",
-    )
-    readonly_fields = ("date_joined", "last_login")
-
-    filter_horizontal = ()
-    list_filter = ()
-    fieldsets = ()
+    def __init__(self, *args, **kwargs):
+        new_fields = Account.get_admin_fields()
+        self.list_display += new_fields
+        self.fieldsets[1][1]["fields"] += new_fields
+        return UserAdmin.__init__(self, *args, **kwargs)
 
 
 admin.site.register(Account, AccountAdmin)

@@ -40,7 +40,6 @@ def algo_view(request, slug, mode):
         return redirect("patient:detail", slug)
 
     default_results = {}
-
     context["refs"] = REFS
     context["algo"], context["pbar_max"] = get_algo()
     context["questions"] = QUESTIONS
@@ -48,5 +47,4 @@ def algo_view(request, slug, mode):
         context["results"] = {}
     else:
         context["results"] = get_default_results(patient)
-    print("CONTEXT", context)
     return render(request, "algorithm/algo_manager.html", context)

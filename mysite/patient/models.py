@@ -55,7 +55,7 @@ class Patient(models.Model):
     algo = models.CharField(
         "Algorithme suivi", max_length=40, choices=to_choice(ALGO_CHOICES), blank=True
     )
-    algo_complete_results = models.JSONField(default=dict)
+    algo_complete_results = models.JSONField(default=dict, blank=True)
 
     # -------------------- POSTOP -----------------#
     schema_therap = models.CharField(

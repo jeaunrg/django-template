@@ -41,7 +41,7 @@
 <button id="next-button" onclick="next()" class="btn bs-icon2 bi-arrow-right-circle "></button>
 
 <br>
-<h3> PATIENT N°{{patient.incl_num}}</h3>
+<h3 class="title"> PATIENT N°{{patient.incl_num}}</h3>
 
 <div id="question-container">
   <div class="progress">
@@ -64,11 +64,8 @@
     <br>
     <button id="submit-result-button" onclick="send_results()" class="btn btn-success">Enregistrer les résultats</button>
     <form id="result-form" method="post">{% csrf_token %}</form>
-
   </div>
-
   {% endfor %}
-
   <div id="final" style="display: none; text-align: left;"> </div>
   <br>
 </div>

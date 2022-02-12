@@ -9,5 +9,7 @@
 </style>
 
 <a class="nav-link px-2 htext-secondary" href="{% url 'home' %}">Accueil</a>
+{% if user.is_staff %}
 <a class="nav-link px-2 htext-primary" href="/admin/">Administration</a>
+{% endif %}
 <a class="nav-link px-2 htext-primary" href="{% url 'personal:contact' %}">Contact</a>
