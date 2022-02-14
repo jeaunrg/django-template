@@ -33,6 +33,9 @@
   <div >
     <h2 class="title" align="center"> PATIENT N°{{patient.incl_num}} </h2>
   </div>
+  {% for k, v in patient.algo_conclusions.items %}
+  {{k}}: {{v}}
+  {% endfor %}
   <br>
   <div class="info container">
 
@@ -93,6 +96,11 @@
 
     <h4> Résultats </h4>
     <hr>
+    <div>
+      {% for k, v in patient.algo_conclusions.items %}
+      <strong>{{k}}: </strong> <a>{{v}}</a><br>
+      {% endfor %}
+    </div>
     <div style="height: 100px;">
       <a href="{% url 'personal:pdf' patient.slug 'False' %}" class="btn bs-icon2 bi-file-medical"></a>
       <a href="{% url 'personal:pdf' patient.slug 'True' %}" class="btn bs-icon2 bi-arrow-bar-down"></a>

@@ -1,14 +1,36 @@
 import json
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic.edit import UpdateView
 from editable.algorithm import ALGO
 from editable.data import REFS
 from editable.default import get_default_results
 from editable.questions import QUESTIONS
 from patient.models import Patient
 
+from .forms import PatientAlgoForm
+from .models import Algorithm
 from .utils import get_algo
+from django.urls import reverse
+
+
+
+class AlgoView(LoginRequiredMixin, UpdateView):
+    template_name = "algorithm/algo_manager.html"
+    form_class = PatientAlgoForm
+    model = Patient
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        algo = Algorithm.objects.filter(name="Default").first()
+        context.update(algo.build())
+        return context
+
+    def get_success_url(self):
+        return reverse("patient:detail", kwargs={"slug": self.object.slug})
+
 
 
 @login_required(login_url="login")

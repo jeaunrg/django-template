@@ -58,34 +58,58 @@
     {% endif %}
     {% endfor %}
   </div>
+  <div id="conclusions" style="display: none;" class="btn-group-vertical">
+    <div id="conclusion-content">
+    </div>
+    <br>
+    <button id="submit-result-button" onclick="send_results()" class="btn btn-success">Enregistrer les résultats</button>
+    <form id="result-form" method="post">{% csrf_token %}</form>
+  </div>
   {% endfor %}
+  <div id="final" style="display: none; text-align: left;"> </div>
+  <br>
 </div>
 
-<br>
-<form id="result-form" method="post" style="display: nonee;">
-  {% csrf_token %}
-  <button id="submit-result-button" class="btn btn-success">Enregistrer les résultats</button>
-  {% include 'widgets/form.html' %}
-</form>
 
 
 <script type="text/javascript">
   const init_algo = {{ algo | safe }};
   const questions = {{ questions | safe }};
+  const references = {{ refs | safe }};
+  const default_results = {{ results | safe }};
+  const pbar_max = {{ pbar_max }};
 
   var current_qid = null;
-  var results = JSON.parse(document.getElementById('id_algo_complete_results').value);
-  var conclusions = JSON.parse(document.getElementById('id_algo_conclusions').value);
+  var results = {};
+  var conclusions = {};
   var traitement_ref = 'conclusion';
   start_algo();
 
+  function dict_to_hiddenform(dico, form, prefix = '') {
+    for (const key in dico) {
+      if (dico.hasOwnProperty(key)) {
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = prefix + key;
+        hiddenField.value = dico[key];
+        form.appendChild(hiddenField);
+      }
+    }
+  }
+
+  function send_results() {
+    const form = document.getElementById('result-form');
+    dict_to_hiddenform(conclusions, form, 'CONCLUSIONS-');
+    dict_to_hiddenform(default_results, form, 'RESULTS-');
+    dict_to_hiddenform(results, form, 'RESULTS-');
+    form.submit();
+  }
 
   function p_update(value) {
     document.getElementById("algo-progress").setAttribute('style', "width: " + value + "%");
   }
 
   function show_question(qid) {
-    console.log('question', qid);
     document.getElementById("next-button").style.display = 'inline';
     if (Object.keys(results).length === 0) {
       document.getElementById("previous-button").style.display = 'none';
@@ -108,7 +132,11 @@
     }
     var content = "<h4>Conclusions</h4><hr>";
     for (const [key, value] of Object.entries(conclusions)) {
-      content += "<strong>" + key + ": </strong>";
+      if (key in references) {
+        content += "<strong>" + references[key].label + ": </strong>";
+      } else {
+        content += "<strong>" + key + ": </strong>";
+      }
       content += "<a>" + value + "</a><br>";
     }
     document.getElementById('conclusion-content').innerHTML = content;
@@ -120,7 +148,6 @@
     for (var radio of radios) {
       if (radio.checked) {
         results[current_qid] = radio.value;
-        document.getElementById('id_algo_complete_results').value = JSON.stringify(results);
         return start_algo();
       }
     }
@@ -135,9 +162,6 @@
 
   function start_algo() {
     p_update(0);
-    for (const [k, v] of Object.entries(results)) {
-      document.getElementById(k+'-'+v).checked = true;
-    }
     try {
       algorithm(init_algo);
       show_conclusions();
@@ -150,7 +174,6 @@
   function algorithm(algo) {
     if (typeof algo == "string") {
       conclusions[traitement_ref] = algo;
-      document.getElementById('id_algo_conclusions').value = JSON.stringify(conclusions);
       return;
     }
 
@@ -160,6 +183,7 @@
       if (step.includes(' #')) {
         var label = step.split(' #');
         var progress_num = parseInt(label.pop());
+        p_update((progress_num) / pbar_max * 100);
         var question_id = label[0];
       } else {
         var question_id = step;
@@ -171,7 +195,12 @@
         question_id = question_id.split(' %')[0];
       }
       // apply recursion if already response
-      if (question_id in results) {
+      if (question_id in default_results) {
+        if (default_results[question_id] in subalgo) {
+          algorithm(subalgo[default_results[question_id]]);
+        }
+
+      } else if (question_id in results) {
         if (results[question_id] in subalgo) {
           algorithm(subalgo[results[question_id]]);
         }
@@ -183,5 +212,4 @@
     }
   }
 </script>
-
 {% endblock content %}
