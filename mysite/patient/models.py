@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.text import slugify
 from editable.data import *
-
+import json
 
 def to_choice(data, add_empty=True):
     if isinstance(data, dict):
@@ -13,6 +13,7 @@ def to_choice(data, add_empty=True):
     if add_empty:
         choices = [("", "")] + choices
     return choices
+
 
 
 class Patient(models.Model):
@@ -56,6 +57,7 @@ class Patient(models.Model):
         "Algorithme suivi", max_length=40, choices=to_choice(ALGO_CHOICES), blank=True
     )
     algo_complete_results = models.JSONField(default=dict, blank=True)
+    algo_conclusions = models.JSONField(default=dict, blank=True)
 
     # -------------------- POSTOP -----------------#
     schema_therap = models.CharField(

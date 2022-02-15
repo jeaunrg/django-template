@@ -10,7 +10,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from editable.data import TRAIT_CHOICES
 from editable.settings import N_PATIENTS_PER_PAGE
-
+from mysite.mixins import AuthorRequiredMixin
 from .forms import (
     PostopPatientFileForm,
     PreopPatientFileForm,
@@ -21,7 +21,7 @@ from .models import Patient
 from .utils import get_patients_page
 
 
-class PreopPatientView(LoginRequiredMixin, CreateView):
+class PreopPatientView(AuthorRequiredMixin, CreateView):
     form_class = PreopPatientFileForm
     template_name = "patient/preop_patient.html"
 
@@ -37,7 +37,7 @@ class PreopPatientView(LoginRequiredMixin, CreateView):
         return reverse("patient:detail", kwargs={"slug": self.object.slug})
 
 
-class PostopPatientView(LoginRequiredMixin, UpdateView):
+class PostopPatientView(AuthorRequiredMixin, UpdateView):
     model = Patient
     form_class = PostopPatientFileForm
     template_name = "patient/postop_patient.html"
@@ -58,7 +58,7 @@ class PostopPatientView(LoginRequiredMixin, UpdateView):
         return reverse("patient:detail", kwargs={"slug": self.object.slug})
 
 
-class EditPatientView(LoginRequiredMixin, UpdateView):
+class EditPatientView(AuthorRequiredMixin, UpdateView):
     model = Patient
     form_class = UpdatePatientFileForm
     template_name = "patient/edit_patient.html"
@@ -85,7 +85,7 @@ class PatientsView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class AddTraitementView(LoginRequiredMixin, FormView):
+class AddTraitementView(AuthorRequiredMixin, FormView):
     form_class = TraitementFileForm
     template_name = "patient/add_traitement.html"
 
@@ -108,7 +108,7 @@ class AddTraitementView(LoginRequiredMixin, FormView):
         return reverse("patient:detail", kwargs={"slug": self.kwargs["slug"]})
 
 
-class EditTraitementView(LoginRequiredMixin, FormView):
+class EditTraitementView(AuthorRequiredMixin, FormView):
     form_class = TraitementFileForm
     template_name = "patient/edit_traitement.html"
 

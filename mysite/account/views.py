@@ -12,13 +12,10 @@ from .models import Account
 class AccountUpdateView(LoginRequiredMixin, UpdateView):
     form_class = AccountUpdateForm
     template_name = "account/update.html"
+    success_url = '/account/update'
 
     def get_object(self, queryset=None):
         return self.request.user
-
-    def form_valid(self, form):
-        self.object = form.save()
-        return self.render_to_response(self.get_context_data(form=form))
 
 
 class AccountDeleteView(LoginRequiredMixin, DeleteView):

@@ -10,6 +10,7 @@ class AccountAdmin(UserAdmin):
         self.list_display = (
             "username",
             "email",
+            "is_author",
             "is_staff",
             "is_active",
             "is_superuser",

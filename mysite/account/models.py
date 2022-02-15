@@ -15,6 +15,7 @@ def upload_location(instance, filename):
 
 
 class Account(AbstractUser):
+    is_author = models.BooleanField(default=True, help_text='Designates that this user has permissions to modify patients.')
     profile_picture = models.ImageField(
         verbose_name="photo de profile",
         upload_to=upload_location,
@@ -25,11 +26,12 @@ class Account(AbstractUser):
     parameters = models.JSONField(default=dict, blank=True)
 
     def get_admin_fields():
-        return (
-            "alias",
-            "profile_picture",
-            "parameters",
-        )
+        abstract_user_fields = [f.name for f in AbstractUser._meta.fields]
+        account_fields = [f.name for f in Account._meta.fields]
+        new_fields = set(account_fields) - set(abstract_user_fields)
+        new_fields.remove('id')
+        print(new_fields)
+        return tuple(new_fields)
 
     def profile_picture_is_valid(self):
         return self.profile_picture and os.path.isfile(
