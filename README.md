@@ -1,6 +1,14 @@
 # django-template
 A dynamic django website template that you can pull and start from (frontend & backend)
 
+## Contents
+
+- Account management (create, modify, delete, authorization, groups)
+- Post management and public posts feed (create, modify posts)
+- Widgets (lookup tables, forms, embedding, collapsable menu for mobile, profile dropdown, sidebar, image cropping, light/dark mode button)
+- Animation (light/dark button, sidebar, profile photo)
+- Design
+
 <p align="center">
   <img src="https://github.com/jeaunrg/django-template/blob/main/django-template.gif?raw=true">
 </p>
@@ -24,7 +32,7 @@ Launch the server
 ```bash
 python ./mysite/manage.py runserver
 ```
-or if you want to reset presets:
+if you want to reset presets before launching the server, use this command:
 ```bash
 python ./mysite/manage.py runserver --reset
 ```
