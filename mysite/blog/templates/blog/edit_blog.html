@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2 class='title'>Post
+    <a class="bs-icon bi bi-caret-left" href="{% url 'blog:detail' object.slug %}"></a>
+
+  </h2>
+
+  <form  class="sticker" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'widgets/form.html' %}
+    <br>
+    <button class='btn btn-primary' id='login' type="submit">Mettre à jour</button>
+  </form>
+</div>
+
+
+
+{% endblock content %}

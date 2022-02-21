@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2 class="title">Post
+    <a class="bs-icon bi bi-caret-left" href="{% url 'blog:list' %}"></a>
+  </h2>
+
+  <div class="sticker">
+    <form method="POST" action="{% url 'blog:delete' object.slug %}"> {% csrf_token %}
+
+    <p class="blog-title">{{object.title}}</p>
+    <div>{{object.body}}</div>
+    <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
+    <div>Par @{{object.author}}, le {{object.date_published}}</div>
+
+    {% if object.author == request.user %}
+      <a href="{% url 'blog:edit' object.slug %}" class="btn btn-primary">Modifier</a>
+      <input type="submit" class="btn btn-danger" onclick="return confirm('Etes vous sûr de vouloir supprimer ce post ?');" value="Supprimer">
+    {% endif %}
+  </div>
+</div>
+
+
+
+{% endblock content %}

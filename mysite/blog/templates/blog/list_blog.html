@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2 class='title'>Posts
+    <a class="bs-icon bi bi-file-plus" href="{% url 'blog:create' %}"></a>
+  </h2>
+
+
+  {% if object_list %}
+    {% for object in object_list %}
+      <div class="sticker">
+        <a class="btn" style="width:100%;" href="{% url 'blog:detail' object.slug %}">
+          <p class="blog-title" >{{object.title}}</p>
+          <div>{{object.body}}</div>
+          <div><img style="object-fit: cover; width:100%;" src="{{object.image.url}}"></div>
+        </a>
+      </div>
+      <br>
+    {% endfor %}
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/blog/list?page={{ page_obj.previous_page_number }}">précédent</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/blog/list?page={{ page_obj.next_page_number }}">suivant</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+  {% else %}
+    Aucun post.
+  {% endif %}
+</div>
+
+{% endblock content %}
