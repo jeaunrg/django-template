@@ -1,15 +1,11 @@
-from django import forms
 from blog.models import BlogPost
+from django import forms
+
 from mysite.widgets import MyCroppieField
 
-
 IMG_OPTIONS = {
-    'viewport': {
-        'width': 180,
-        'height': 180,
-        'shape': 'square'
-        },
-    }
+    "viewport": {"width": 180, "height": 180, "shape": "square"},
+}
 
 
 class BlogPostForm(forms.ModelForm):
@@ -17,4 +13,4 @@ class BlogPostForm(forms.ModelForm):
 
     class Meta:
         model = BlogPost
-        fields = ['title', 'body', 'image']
+        fields = ["title", "body", "image"]

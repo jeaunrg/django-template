@@ -1,14 +1,14 @@
-from django.db import models
-from django.db.models.signals import pre_save
-from django.utils.text import slugify
 from django.conf import settings
-from django.db.models.signals import post_delete
+from django.db import models
+from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
+from django.utils.text import slugify
 
 
 def upload_location(instance, filename):
-    file_path = 'blog/{author_id}/{title}-{filename}'.format(
-                author_id=str(instance.author.id), title=str(instance.title), filename=filename)
+    file_path = "blog/{author_id}/{title}-{filename}".format(
+        author_id=str(instance.author.id), title=str(instance.title), filename=filename
+    )
     return file_path
 
 
@@ -16,7 +16,9 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     body = models.TextField(max_length=5000, null=False, blank=True)
     image = models.ImageField(upload_to=upload_location, null=True, blank=True)
-    date_published = models.DateTimeField(auto_now_add=True, verbose_name="date published")
+    date_published = models.DateTimeField(
+        auto_now_add=True, verbose_name="date published"
+    )
     date_updated = models.DateTimeField(auto_now=True, verbose_name="date updated")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(blank=True, unique=True)
@@ -25,7 +27,10 @@ class BlogPost(models.Model):
         return self.title
 
     def get_fields(self):
-        return [(field.verbose_name, field.value_from_object(self)) for field in self.__class__._meta.fields]
+        return [
+            (field.verbose_name, field.value_from_object(self))
+            for field in self.__class__._meta.fields
+        ]
 
 
 @receiver(post_delete, sender=BlogPost)

@@ -9,6 +9,9 @@
     <p> {{ user }} connecté </p>
   {% endif %}
 
+  <a href="{% url 'personal:pdf' %}" class="btn bs-icon2 bi-file-medical"></a>
+  <a href="{% url 'personal:data' %}" class="btn bs-icon1 bi-file-earmark-ruled" ></a>
+
   <div id="table">
     {% include 'widgets/table.html' with table=accounts %}
   </div>
