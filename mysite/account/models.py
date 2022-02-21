@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
 from mysite.settings import MEDIA_ROOT, STATIC_ROOT
 
 
@@ -15,7 +16,10 @@ def upload_location(instance, filename):
 
 
 class Account(AbstractUser):
-    is_author = models.BooleanField(default=True, help_text='Designates that this user has permissions to create posts.')
+    is_author = models.BooleanField(
+        default=True,
+        help_text="Designates that this user has permissions to create posts.",
+    )
     profile_picture = models.ImageField(
         verbose_name="photo de profile",
         upload_to=upload_location,
@@ -29,7 +33,7 @@ class Account(AbstractUser):
         abstract_user_fields = [f.name for f in AbstractUser._meta.fields]
         account_fields = [f.name for f in Account._meta.fields]
         new_fields = set(account_fields) - set(abstract_user_fields)
-        new_fields.remove('id')
+        new_fields.remove("id")
         print(new_fields)
         return tuple(new_fields)
 

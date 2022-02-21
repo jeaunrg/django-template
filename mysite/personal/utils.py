@@ -5,7 +5,6 @@ import pdfkit
 from django.http import HttpResponse
 from django.template.loader import get_template
 
-
 # pdf options, https://wkhtmltopdf.org/usage/wkhtmltopdf.txt for more options
 PDF_OPTIONS = {
     "page-size": "A4",
@@ -14,6 +13,7 @@ PDF_OPTIONS = {
     "margin-bottom": "0in",
     "margin-left": "0in",
 }
+
 
 def generate_pdf(template, context={}, save_filename="outut.pdf", download=False):
     template = get_template(template)
