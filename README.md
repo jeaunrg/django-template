@@ -5,6 +5,8 @@ A dynamic django website template that you can pull and start from (frontend & b
 
 - Account management (create, modify, delete, authorization, groups)
 - Post management and public posts feed (create, modify posts)
+- PDF creation with html template
+- Data download
 - Widgets (lookup tables, forms, embedding, collapsable menu for mobile, profile dropdown, sidebar, image cropping, light/dark mode button)
 - Animation (light/dark button, sidebar, profile photo)
 - Design

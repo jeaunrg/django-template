@@ -34,7 +34,6 @@ class Account(AbstractUser):
         account_fields = [f.name for f in Account._meta.fields]
         new_fields = set(account_fields) - set(abstract_user_fields)
         new_fields.remove("id")
-        print(new_fields)
         return tuple(new_fields)
 
     def profile_picture_is_valid(self):
