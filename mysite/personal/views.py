@@ -4,6 +4,14 @@ from account.models import Account
 import copy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+import pandas as pd
+from io import BytesIO
+from django.http import HttpResponse
+from .utils import generate_pdf
+
+# nom du fichier de données téléchargé
+EXCEL_FILENAME = "data.xlsx"
+EXCEL_ENCODING = "utf8"
 
 
 class HomePageView(LoginRequiredMixin, TemplateView):
@@ -44,29 +52,20 @@ class ContactView(LoginRequiredMixin, TemplateView):
 
 
 @login_required(login_url="login")
-def generate_pdf_view(request, slug, download="False"):
-    patient = get_object_or_404(Patient, slug=slug)
-    SERVER_URL = request.build_absolute_uri("/")
+def generate_pdf_view(request):
     context = {}
-    context["SERVER_URL"] = SERVER_URL
-    context["patient"] = patient
     return generate_pdf(
         "personal/pdf_template.html",
         context,
-        f"patient_{patient.incl_num}.pdf",
-        download == "True",
+        f"file_name.pdf",
+        download=False,
     )
 
 
 @login_required(login_url="login")
-def download_data_view(request, filter, query):
-    kwargs = {}
-    if filter == "is_author":
-        kwargs["author"] = request.user
-    incl_nums = [patient.incl_num for patient in get_patients_queryset(query, **kwargs)]
-    queryset = Patient.objects.filter(incl_num__in=incl_nums)
-    query = str(queryset.query)
-    df = pd.read_sql_query(query, connection)
+def download_data_view(request):
+    df = pd.DataFrame()
+    df.loc["row", "col"] = "Exemple"
     excel_file = BytesIO()
     xlwriter = pd.ExcelWriter(excel_file, engine="xlsxwriter")
     df.to_excel(xlwriter, "sheetname", encoding=EXCEL_ENCODING)
