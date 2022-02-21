@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+  document.getElementById('ppage').href = "{% url 'patient:detail' view.patient.slug %}";
+</script>
+
+<br>
+<div class="container px-4">
+  <h2 align="center"> PATIENT N°{{view.patient.incl_num}} </h2>
+  <hr>
+  <form method="post" class="create-form" id="myform">
+    {% csrf_token %}
+
+    {% for field in form %}
+    {% include 'patient/snippets/field2html.html' %}
+    {% endfor %}
+    {% if traitement.conclusion %}
+    <br><br><strong>Résultats: </strong>
+    {% for concl in traitement.conclusion %}
+    <br><a> - {{concl}}</a>
+    {% endfor %}
+    {% endif %}
+    <br><br>
+
+    <input type="hidden" name="submitType" id="submitType">
+    <button type="submit" class="btn btn-success">Valider</button>
+    <button onclick='document.getElementById("submitType").value = "delete"' class="btn btn-danger">Supprimer le traitement</button>
+
+    {% if traitement.conclusion %}
+    <button onclick='document.getElementById("submitType").value = "reset"' class="btn btn-outline-danger">Réinitialiser le résultat</button>
+    {% endif %}
+  </form>
+
+
+</div>
+
+{% endblock content %}

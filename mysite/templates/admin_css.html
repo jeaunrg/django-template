@@ -2,7 +2,6 @@
 {% include 'fonts.html' %}
 
 <style type="text/css">
-
   /* VARIABLE DEFINITIONS */
   :root {
     --primary: var(--highlight-dark);
@@ -37,8 +36,10 @@
     --message-warning-bg: #ffc;
     --message-error-bg: #ffefef;
 
-    --darkened-bg: var(--gray-light); /* A bit darker than --body-bg */
-    --selected-bg: var(--gray); /* E.g. selected table cells */
+    --darkened-bg: var(--gray-light);
+    /* A bit darker than --body-bg */
+    --selected-bg: var(--gray);
+    /* E.g. selected table cells */
     --selected-row: var(--white);
 
     --button-fg: #fff;
@@ -46,7 +47,8 @@
     --button-hover-bg: #609ab6;
     --default-button-bg: var(--secondary);
     --default-button-hover-bg: #205067;
-    --close-button-bg: #888; /* Previously #bbb, contrast 1.92 */
+    --close-button-bg: #888;
+    /* Previously #bbb, contrast 1.92 */
     --close-button-hover-bg: #747474;
     --delete-button-bg: #ba2121;
     --delete-button-hover-bg: #a41515;
@@ -56,42 +58,9 @@
     --object-tools-hover-bg: var(--close-button-hover-bg);
   }
 
-  @media (prefers-color-scheme: darks) {
-    :root {
-      --primary: #264b5d;
-      --primary-fg: #eee;
 
-      --body-fg: var(--white);
-      --body-bg: var(--gray-dark);
-      --body-quiet-color: var(--gray-light);
-      --body-loud-color: var(--white);
-
-      --breadcrumbs-link-fg: var(--white);
-      --breadcrumbs-bg: var(--gray-dark);
-
-      --link-fg: #81d4fa;
-      --link-hover-color: #4ac1f7;
-      --link-selected-fg: #6f94c6;
-
-      --hairline-color: #272727;
-      --border-color: #353535;
-
-      --error-fg: #e35f5f;
-      --message-success-bg: #006b1b;
-      --message-warning-bg: #583305;
-      --message-error-bg: #570808;
-
-      --darkened-bg: #212121;
-      --selected-bg: #1b1b1b;
-      --selected-row: #00363a;
-
-      --close-button-bg: #333333;
-      --close-button-hover-bg: #666666;
-    }
-  }
 
   #header {
     height: 60px;
   }
-
 </style>

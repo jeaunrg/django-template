@@ -1,0 +1,37 @@
+
+
+{% if not nolabel %}
+  <div class="form-floating">
+{% else %}
+  <div class="form">
+{% endif %}
+
+  <!-- Combo box -->
+  {% if field.input_type == 'select' %}
+    <select class="form-select" id={{field.name}} name={{field.name}}>
+      {% for value, label in field.field.choices %}
+        <option value="{{value}}" {% if field.value == value %} selected {% endif %} >{{ label }}</option>
+      {% endfor %}
+    </select>
+
+  <!-- not formatted date -->
+  {% elif field.input_type == 'date' and format_date %}
+    <input {% if field.field.required %} required {% endif %} type="{{field.input_type}}" name={{field.name}} id={{field.name}} class="form-control" placeholder={{field.label}} value="{{field.value|date:'Y-m-d'}}">
+
+  <!-- other input -->
+  {% else %}
+  <input {% if field.field.required %} required {% endif %} type="{{field.input_type}}" name={{field.name}} id={{field.name}} class="form-control" placeholder={{field.label}} value="{{field.value}}">
+  <!-- <input {% if field.field.required %} required {% endif %} type="{{field.input_type}}" name={{field.name}} id={{field.name}} class="form-control" placeholder={{field.label}} {% if field.value is not None %} value="{{field.value}}" {% endif %}> -->
+  {% endif %}
+
+  <!-- label -->
+  {% if not nolabel %}
+    <label class="shrinkable" for={{field.name}}>{{field.label}}</label>
+  {% endif %}
+
+  <!-- raise errors -->
+  {% for error in field.errors %}
+    <p style="color: red"> {{ error }} </p>
+  {% endfor %}
+
+</div>

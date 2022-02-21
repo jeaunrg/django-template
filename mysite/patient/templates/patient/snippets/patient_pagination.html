@@ -1,0 +1,30 @@
+<!-- FILTERED Pagination -->
+<div class="d-flex flex-column m-auto pagination mt-5">
+<nav aria-label="Page navigation">
+  <ul class="pagination pg-grey justify-content-center">
+	{% if patients.has_previous %}
+	  <li class="page-item">
+		<a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ patients.previous_page_number }}">&laquo; Précédente</a>
+	  </li>
+	{% endif %}
+
+  {% for i in patients.paginator.page_range %}
+    {% if patients.number == i %}
+      <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+    {% else %}
+      <li class="page-item" ><a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+
+    {% if patients.has_next %}
+      <li class="page-item">
+      <a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ patients.next_page_number }}">Suivante</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link"  href="?{% if query %}q={{query}}&{% endif %}page={{ patients.paginator.num_pages }}">Fin &raquo;</a>
+    </li>
+    {% endif %}
+</ul>
+</nav>
+</div>
+<!-- end pagination-->

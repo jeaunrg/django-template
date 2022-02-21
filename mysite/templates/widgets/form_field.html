@@ -1,11 +1,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
-
 {{ field | as_crispy_field }}
 
 {% if  field.field.is_image %}
-  <div style="height: 230px; width: 230px;">
-      <div id="cropper" class="cropper-{{field.field.shape}}">
-      </div>
+<div style="height: 230px; width: 230px;">
+  <div id="cropper" class="cropper-{{field.field.shape}}">
   </div>
+</div>
 {% endif %}

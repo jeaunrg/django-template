@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style type="text/css">
+  #question-container {
+    padding-top: 15px;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 50%;
+  }
+
+  h4 {
+    white-space: pre-line;
+  }
+
+  #previous-button {
+    left: 2%;
+    top: 30%;
+    position: fixed;
+  }
+
+  #next-button {
+    right: 2%;
+    top: 30%;
+    float: right;
+    position: fixed;
+  }
+
+  h3 {
+    text-align: center;
+  }
+</style>
+
+<script type="text/javascript">
+  document.getElementById('ppage').href = "{% url 'patient:detail' patient.slug %}";
+</script>
+
+<button id="previous-button" onclick="previous()" class="btn bs-icon2 bi-arrow-left-circle "></button>
+<button id="next-button" onclick="next()" class="btn bs-icon2 bi-arrow-right-circle "></button>
+
+<br>
+<h3 class="title"> PATIENT N°{{patient.incl_num}}</h3>
+
+<div id="question-container">
+  <div class="progress">
+    <div id="algo-progress" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div><br>
+  {% for key, values in questions.items %}
+  <div id="{{key}}" style="display: none;" class="btn-group-vertical">
+    <h4> {{values.question}} </h4>
+    <hr>
+    {% for ans in values.answers %}
+    {% if ans %}
+    <input type="radio" class="btn-check" value="{{ans}}" name="options-outlined {{key}}" id="{{key}}-{{ans}}" autocomplete="off">
+    <label class="btn btn-outline-secondary" for="{{key}}-{{ans}}">{{ans}}</label>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+
+<br>
+<form id="result-form" method="post" style="display: nonee;">
+  {% csrf_token %}
+  <button id="submit-result-button" class="btn btn-success">Enregistrer les résultats</button>
+  {% include 'widgets/form.html' %}
+</form>
+
+
+<script type="text/javascript">
+  const init_algo = {{ algo | safe }};
+  const questions = {{ questions | safe }};
+
+  var current_qid = null;
+  var results = JSON.parse(document.getElementById('id_algo_complete_results').value);
+  var conclusions = JSON.parse(document.getElementById('id_algo_conclusions').value);
+  var traitement_ref = 'conclusion';
+  start_algo();
+
+
+  function p_update(value) {
+    document.getElementById("algo-progress").setAttribute('style', "width: " + value + "%");
+  }
+
+  function show_question(qid) {
+    console.log('question', qid);
+    document.getElementById("next-button").style.display = 'inline';
+    if (Object.keys(results).length === 0) {
+      document.getElementById("previous-button").style.display = 'none';
+    } else {
+      document.getElementById("previous-button").style.display = 'inline';
+    }
+    if (current_qid != null) {
+      document.getElementById(current_qid).style.display = 'none';
+    }
+    document.getElementById(qid).style.display = 'inline';
+    current_qid = qid
+  }
+
+  function show_conclusions() {
+    document.getElementById('conclusions').style.display = 'inline';
+    document.getElementById("previous-button").style.display = 'inline';
+    document.getElementById("next-button").style.display = 'none';
+    if (current_qid != null) {
+      document.getElementById(current_qid).style.display = 'none';
+    }
+    var content = "<h4>Conclusions</h4><hr>";
+    for (const [key, value] of Object.entries(conclusions)) {
+      content += "<strong>" + key + ": </strong>";
+      content += "<a>" + value + "</a><br>";
+    }
+    document.getElementById('conclusion-content').innerHTML = content;
+    current_qid = 'conclusions'
+  }
+
+  function next() {
+    var radios = document.getElementsByName("options-outlined " + current_qid);
+    for (var radio of radios) {
+      if (radio.checked) {
+        results[current_qid] = radio.value;
+        document.getElementById('id_algo_complete_results').value = JSON.stringify(results);
+        return start_algo();
+      }
+    }
+  }
+
+  function previous() {
+    const last_qid = Object.keys(results)[Object.keys(results).length - 1];
+    delete results[last_qid];
+    start_algo();
+  }
+
+
+  function start_algo() {
+    p_update(0);
+    for (const [k, v] of Object.entries(results)) {
+      document.getElementById(k+'-'+v).checked = true;
+    }
+    try {
+      algorithm(init_algo);
+      show_conclusions();
+      p_update(100);
+    } catch (out) {
+      show_question(out);
+    }
+  }
+
+  function algorithm(algo) {
+    if (typeof algo == "string") {
+      conclusions[traitement_ref] = algo;
+      document.getElementById('id_algo_conclusions').value = JSON.stringify(conclusions);
+      return;
+    }
+
+
+    for (const [step, subalgo] of Object.entries(algo)) {
+      // get progressbar value
+      if (step.includes(' #')) {
+        var label = step.split(' #');
+        var progress_num = parseInt(label.pop());
+        var question_id = label[0];
+      } else {
+        var question_id = step;
+      }
+
+      // get answer references
+      if (question_id.includes(' %')) {
+        traitement_ref = question_id.split(' %')[1];
+        question_id = question_id.split(' %')[0];
+      }
+      // apply recursion if already response
+      if (question_id in results) {
+        if (results[question_id] in subalgo) {
+          algorithm(subalgo[results[question_id]]);
+        }
+      }
+      // else ask question
+      else if (question_id in questions) {
+        throw question_id;
+      }
+    }
+  }
+</script>
+
+{% endblock content %}

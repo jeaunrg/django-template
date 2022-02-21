@@ -3,40 +3,41 @@
 <style type="text/css">
   #profile_img {
     width: 40px;
-    box-shadow: 3px 3px 2px 3px rgba(0,0,0,0.5);
+    box-shadow: 3px 3px 2px 3px rgba(0, 0, 0, 0.5);
   }
 
-   #profile_img:hover,
-   #profile_img:focus {
-     transform: scale(1.1);
-   }
-   #dropdownUser {
-     color: var(--head-txt1);
-   }
+  #profile_img:hover,
+  #profile_img:focus {
+    transform: scale(1.1);
+  }
 
-   .dropdown-menu {
-     background-color: var(--head-bg);
-   }
-   .dropdown-item {
-     color: var(--head-txt1);
-   }
+  #dropdownUser {
+    color: var(--head-txt1);
+  }
 
-   .dropdown-menu {
-     box-shadow: 6px 6px 5px 3px rgba(0,0,0,0.5);
-   }
-   .dropdown-divider {
-     color: var(--head-txt1);
-     opacity: 0.5;
-     margin: 10%;
-   }
+  .dropdown-menu {
+    background-color: var(--head-bg);
+  }
+
+  .dropdown-item {
+    color: var(--head-txt1);
+  }
+
+
+  .dropdown-menu {
+    box-shadow: 6px 6px 5px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .dropdown-divider {
+    color: var(--head-txt1);
+    opacity: 0.5;
+    margin: 10%;
+  }
 </style>
 
 <a href="#" class="text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
 
-  <img id="profile_img"  alt="mdo" class="rounded-circle transform"
-    {% if user.profile_picture_is_valid %} src="{{user.profile_picture.url}}"
-    {% else %} src="{% static 'images/default_avatar.png' %}"
-    {% endif %}>
+  <img id="profile_img" alt="mdo" class="rounded-circle transform" {% if user.profile_picture_is_valid %} src="{{user.profile_picture.url}}" {% else %} src="{% static 'images/default_avatar.png' %}" {% endif %}>
 
 </a>
 

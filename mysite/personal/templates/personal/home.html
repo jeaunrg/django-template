@@ -1,18 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
+<style type="text/css">
+  #centered-buttons {
+    padding-top: 30px;
+    margin: 0 auto;
+    text-align: center;
+    left: 25%;
+    right: 25%;
+  }
+
+  .main-btn {
+    font-size: 100%;
+    width: 50%;
+    max-width: 300px;
+  }
+</style>
+
+<script type="text/javascript">
+  document.getElementById('ppage').style.display = "none";  
+</script>
 
 <div class="container">
-  <h2 class='title'>Boite de réception</h2>
-  {% if user %}
-    <p> {{ user }} connecté </p>
-  {% endif %}
-
-  <div id="table">
-    {% include 'widgets/table.html' with table=accounts %}
+  <div id='centered-buttons'>
+    <a type="button" href="{% url 'patient:preop' %}" class="btn bs-icon2 bi-person-badge">
+      <p style="font-size: 20px;"> Inclure un nouveau patient</p>
+    </a>
+    <br><br>
+    <a type="button" href="{% url 'patient:patients' 'all' %}" class="btn bs-icon2 bi-search">
+      <p style="font-size: 20px;"> Retrouver un patient déjà inclus</p>
+    </a>
   </div>
-</div>
 
+</div>
 
 {% endblock content %}

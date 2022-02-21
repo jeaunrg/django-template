@@ -2,11 +2,14 @@
   .htext-secondary {
     color: var(--head-txt2);
   }
+
   .htext-primary {
     color: var(--head-txt1);
   }
 </style>
 
 <a class="nav-link px-2 htext-secondary" href="{% url 'home' %}">Accueil</a>
+{% if user.is_staff %}
 <a class="nav-link px-2 htext-primary" href="/admin/">Administration</a>
+{% endif %}
 <a class="nav-link px-2 htext-primary" href="{% url 'personal:contact' %}">Contact</a>

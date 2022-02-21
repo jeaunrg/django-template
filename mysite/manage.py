@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
-import os
-import sys
 import glob
+import os
 import shutil
+import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -24,8 +24,8 @@ def clear():
     manage_pyfile = os.path.join(dirname, "manage.py")
 
     print("delete migrations...")
-    for migration_file in glob.glob(os.path.join(dirname, '*', 'migrations', '*.py')):
-        if not migration_file.endswith('__init__.py'):
+    for migration_file in glob.glob(os.path.join(dirname, "*", "migrations", "*.py")):
+        if not migration_file.endswith("__init__.py"):
             os.remove(migration_file)
             print("delete", migration_file)
 
@@ -51,13 +51,15 @@ def init():
     os.system(f"python {manage_pyfile} migrate")
 
     print("Creating superuser...")
-    os.environ['DJANGO_SUPERUSER_PASSWORD'] = "admin"
-    os.system(f"python {manage_pyfile} createsuperuser --noinput --username admin --email admin@gmail.com")
+    os.environ["DJANGO_SUPERUSER_PASSWORD"] = "admin"
+    os.system(
+        f"python {manage_pyfile} createsuperuser --noinput --username admin --email admin@gmail.com"
+    )
 
 
-if __name__ == '__main__':
-    if '--reset' in sys.argv:
+if __name__ == "__main__":
+    if "--reset" in sys.argv:
         clear()
         init()
-        sys.argv.remove('--reset')
+        sys.argv.remove("--reset")
     main()
