@@ -39,6 +39,7 @@ LOGIN_REDIRECT_URL = '/'
 INSTALLED_APPS = [
     'crispy_forms',
     'croppie',
+    "bootstrap",
 
     # My apps
     'personal',
