@@ -59,14 +59,20 @@
     {% endfor %}
   </div>
   {% endfor %}
+  <div id="conclusions" style="display: none;" class="btn-group-vertical">
+    <div id="conclusion-content"></div>
+    <br>
+    <form id="result-form" method="post">
+      {% csrf_token %}
+      <button id="submit-result-button" class="btn btn-success">Enregistrer les résultats</button>
+      <div style="display: none;">
+        {{ form }}
+      </div>
+    </form>
+  </div>
 </div>
-
 <br>
-<form id="result-form" method="post" style="display: nonee;">
-  {% csrf_token %}
-  <button id="submit-result-button" class="btn btn-success">Enregistrer les résultats</button>
-  {% include 'widgets/form.html' %}
-</form>
+
 
 
 <script type="text/javascript">
@@ -100,6 +106,7 @@
   }
 
   function show_conclusions() {
+    console.log("SHOW CONCLUSION")
     document.getElementById('conclusions').style.display = 'inline';
     document.getElementById("previous-button").style.display = 'inline';
     document.getElementById("next-button").style.display = 'none';
@@ -111,7 +118,9 @@
       content += "<strong>" + key + ": </strong>";
       content += "<a>" + value + "</a><br>";
     }
+
     document.getElementById('conclusion-content').innerHTML = content;
+    console.log("CONTENT", content);
     current_qid = 'conclusions'
   }
 
