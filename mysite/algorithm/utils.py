@@ -25,21 +25,23 @@ def get_algo():
     return algo, nums
 
 
-def dftree_to_dict(df):
+def dftree_to_dict(df, n_questions=0):
     d = {}
     indexes = np.where(df.iloc[:, 0].notnull())[0]
     for i, ind in enumerate(indexes):
         key = str(df.iloc[ind, 0])
         if key.startswith("Q:"):
-            key = key[2:]
+            key = key[2:] + " #" + str(n_questions)
+            n_questions += 1
         if str(df.iloc[ind, 1]) != "nan":
             d[key] = str(df.iloc[ind, 1])
         else:
             if ind == indexes[-1]:
-                d[key] = dftree_to_dict(df.iloc[ind + 1 :, 1:])
+                sub_df = df.iloc[ind + 1 :, 1:]
             else:
-                d[key] = dftree_to_dict(df.iloc[ind + 1 : indexes[i + 1], 1:])
-    return d
+                sub_df = df.iloc[ind + 1 : indexes[i + 1], 1:]
+            d[key], n_questions = dftree_to_dict(sub_df, n_questions)
+    return d, n_questions
 
 
 def dfq_to_dict(df):

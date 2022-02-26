@@ -38,7 +38,7 @@ class Algorithm(models.Model):
     def build(self):
         if "_algo" not in self.__dict__:
             df = pd.read_excel(self.layout, header=None)
-            self._algo = dftree_to_dict(df)
+            self._algo, self.pbar_max = dftree_to_dict(df)
             df = pd.read_excel(self.questions, index_col=0)
             self._questions = dfq_to_dict(df)
-        return {"algo": self._algo, "questions": self._questions}
+        return {"algo": self._algo, "questions": self._questions, "pbar_max": self.pbar_max}

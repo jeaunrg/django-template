@@ -78,6 +78,7 @@
 <script type="text/javascript">
   const init_algo = {{ algo | safe }};
   const questions = {{ questions | safe }};
+  const pbar_max = {{ pbar_max }};
 
   var current_qid = null;
   var results = JSON.parse(document.getElementById('id_algo_complete_results').value);
@@ -91,7 +92,6 @@
   }
 
   function show_question(qid) {
-    console.log('question', qid);
     document.getElementById("next-button").style.display = 'inline';
     if (Object.keys(results).length === 0) {
       document.getElementById("previous-button").style.display = 'none';
@@ -106,7 +106,6 @@
   }
 
   function show_conclusions() {
-    console.log("SHOW CONCLUSION")
     document.getElementById('conclusions').style.display = 'inline';
     document.getElementById("previous-button").style.display = 'inline';
     document.getElementById("next-button").style.display = 'none';
@@ -120,7 +119,6 @@
     }
 
     document.getElementById('conclusion-content').innerHTML = content;
-    console.log("CONTENT", content);
     current_qid = 'conclusions'
   }
 
@@ -164,11 +162,12 @@
     }
 
 
-    for (const [step, subalgo] of Object.entries(algo)) {
+    for (const [step, subalgo] of Object.entries(algo)) {            
       // get progressbar value
       if (step.includes(' #')) {
         var label = step.split(' #');
         var progress_num = parseInt(label.pop());
+        p_update((progress_num) / pbar_max * 100);
         var question_id = label[0];
       } else {
         var question_id = step;
