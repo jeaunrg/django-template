@@ -34,8 +34,8 @@ def clear():
     if os.path.isfile(db_path):
         os.remove(db_path)
 
-    print("delete media")
-    media_path = os.path.join(dirname, "media_cdn")
+    print("delete media but not default")
+    media_path = os.path.join(dirname, "media_cdn", "users")
     shutil.rmtree(media_path)
     os.mkdir(media_path)
 

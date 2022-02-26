@@ -16,6 +16,12 @@ from .utils import get_algo
 from django.urls import reverse
 
 
+def get_algo(name="Default"):
+    algo = Algorithm.objects.filter(name=name).first()
+    if algo is None:
+        algo = Algorithm(name=name)
+        algo.save()
+    return algo
 
 class AlgoView(LoginRequiredMixin, UpdateView):
     template_name = "algorithm/algo_manager.html"
@@ -24,7 +30,7 @@ class AlgoView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        algo = Algorithm.objects.filter(name="Default").first()
+        algo = get_algo()
         context.update(algo.build())
         return context
 

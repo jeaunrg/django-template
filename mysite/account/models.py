@@ -9,8 +9,8 @@ from mysite.settings import MEDIA_ROOT, STATIC_ROOT
 
 def upload_location(instance, filename):
     upload_url = os.path.join("avatars", str(instance.id) + ".png")
-    if os.path.isfile(os.path.join(MEDIA_ROOT, upload_url)):
-        os.remove(os.path.join(MEDIA_ROOT, upload_url))
+    if os.path.isfile(os.path.join(MEDIA_ROOT, "users", upload_url)):
+        os.remove(os.path.join(MEDIA_ROOT, "users", upload_url))
     return upload_url
 
 
@@ -35,7 +35,7 @@ class Account(AbstractUser):
 
     def profile_picture_is_valid(self):
         return self.profile_picture and os.path.isfile(
-            os.path.join(MEDIA_ROOT, self.profile_picture.name)
+            os.path.join(MEDIA_ROOT, "users", self.profile_picture.name)
         )
 
     # Does this user have permission to view this app? (ALWAYS YES FOR SIMPLICITY)

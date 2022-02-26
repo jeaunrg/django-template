@@ -35,7 +35,7 @@
   }
 </style>
 
-
+<br>
 <div class="header">
   <img class="logo" src="{{SERVER_URL}}static/images/logo_erasme.png" alt="logo erasme">
 </div>
@@ -65,11 +65,11 @@
       </tr>
       <tr>
         <td class='h'>Poids :</td>
-        <td>{{patient.weight}} kg</td>
+        <td>{% if patient.weight %}{{patient.weight}} kg{% endif %}</td>
       </tr>
       <tr>
         <td class='h'>Taille :</td>
-        <td>{{patient.height}} cm</td>
+        <td>{% if patient.height %}{{patient.height}} cm {% endif %}</td>
       </tr>
     </tbody>
   </table>
