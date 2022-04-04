@@ -78,6 +78,7 @@
 <script type="text/javascript">
   const init_algo = {{ algo | safe }};
   const questions = {{ questions | safe }};
+  const references = {{ references | safe }};
   const pbar_max = {{ pbar_max }};
 
   var current_qid = null;
@@ -155,6 +156,7 @@
   }
 
   function algorithm(algo) {
+    console.log(algo);
     if (typeof algo == "string") {
       conclusions[traitement_ref] = algo;
       document.getElementById('id_algo_conclusions').value = JSON.stringify(conclusions);
@@ -173,11 +175,6 @@
         var question_id = step;
       }
 
-      // get answer references
-      if (question_id.includes(' %')) {
-        traitement_ref = question_id.split(' %')[1];
-        question_id = question_id.split(' %')[0];
-      }
       // apply recursion if already response
       if (question_id in results) {
         if (results[question_id] in subalgo) {
